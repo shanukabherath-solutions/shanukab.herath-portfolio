@@ -1,6 +1,6 @@
 # Shanuka B. Herath — Portfolio (static)
 
-A lightweight, fully static rebuild of the Next.js portfolio. Plain **HTML + CSS + vanilla JavaScript**, no framework and no runtime server. Built for **Cloudflare Pages** and the domain **https://shanukab.herath.dev**.
+A lightweight, fully static rebuild of the Next.js portfolio. Plain **HTML + CSS + vanilla JavaScript**, no framework and no runtime server. Built for **Cloudflare Pages** and the domain **https://shanukabherath.pages.dev**.
 
 ```
 content/profile.mjs      <- all your text, links and lists (edit this)
