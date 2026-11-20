@@ -178,7 +178,7 @@ export const certifications = [
   { name: "IBM Python 101", issuer: "IBM / Cognitive Class", status: "Completed" },
   { name: "Introduction to Machine Learning", issuer: "Kaggle", status: "Completed" },
   { name: "Certified Artificial Intelligence Security & Risk", issuer: "CAISR", status: "Completed" },
-  { name: "Burp Suite (Web Security)", issuer: "PortSwigger", status: "In Progress" },
+  { name: "Burp Suite (Web Security)", issuer: "PortSwigger", status: "Completed" },
   { name: "AI concepts for developers and technology professionals", issuer: "Microsoft", status: "Completed" },
   { name: "Introduction to DevOps and Site Reliability Engineering", issuer: "LFS162", status: "Completed" },
 ];
