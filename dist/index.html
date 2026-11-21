@@ -33,7 +33,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="preload" href="assets/fonts/space-grotesk-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/styles.8d605fdf.css">
+  <link rel="stylesheet" href="assets/css/styles.d5d3b288.css">
   <script>document.documentElement.className=document.documentElement.className.replace("no-js","js");</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://shanukab.herath.dev/#person","name":"Shanuka B. Herath","jobTitle":"Computer Science Graduate | Software & AI Developer","description":"Portfolio of Shanuka B. Herath, a Computer Science Graduate focused on software development, AI-powered applications, web development, and cybersecurity.","url":"https://shanukab.herath.dev/","image":"https://shanukab.herath.dev/assets/img/avatar-560.webp","email":"mailto:shanbhera@gmail.com","address":{"@type":"PostalAddress","addressCountry":"LK"},"alumniOf":{"@type":"CollegeOrUniversity","name":"University of Bedfordshire"},"sameAs":["https://github.com/shanukabherath-solutions","https://www.linkedin.com/in/shanuka-b-herath/"]},{"@type":"WebSite","@id":"https://shanukab.herath.dev/#website","url":"https://shanukab.herath.dev/","name":"Shanuka Herath — Portfolio","inLanguage":"en","publisher":{"@id":"https://shanukab.herath.dev/#person"}}]}</script>
 </head>
@@ -77,7 +77,7 @@
         <div class="hero__text">
           <p class="prompt"><span>$</span> whoami</p>
           <h1 class="hero__title" id="hero-title">Shanuka B. Herath</h1>
-          <p class="hero__role"><span>Computer Science Graduate</span><span class="hero__sep" aria-hidden="true">|</span><span class="sr-only">, </span><span>Software &amp; AI Developer</span></p>
+          <p class="hero__role"><span class="hero__role-part">Computer Science Graduate</span><span class="hero__sep" aria-hidden="true">|</span><span class="sr-only">, </span><span class="hero__role-part">Software &amp; AI Developer</span></p>
           <p class="hero__lead">I build modern web applications, AI-powered tools, and practical software solutions with a focus on usability, performance, and clean design.</p>
           <div class="hero__actions">
             <a class="btn btn--primary" href="#projects">View My Projects <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
@@ -185,10 +185,13 @@
         <div class="section__head reveal">
           <p class="section__path">~/projects</p>
           <h2 class="section__title" id="projects-title">Projects</h2>
-          <p class="section__desc">Two larger builds, an AI photo editor and an AI-assisted security agent, plus a few smaller cybersecurity exercises.</p>
+          <p class="section__desc">Two featured builds, an AI photo editor and an AI-assisted security agent, plus more projects across machine learning and desktop development.</p>
         </div>
         <div class="section__body">
-        <article class="project project--featured reveal" aria-labelledby="photosphere-title">
+        <nav class="project-index" aria-label="Jump to a project">
+          <ul><li><a href="#project-photosphere">Photosphere</a></li><li><a href="#project-aesa">AESA</a></li><li><a href="#project-no-exit-online">No Exit Online</a></li><li><a href="#project-q-learning-agent">Q-Learning Agent</a></li><li><a href="#project-healthcare-appointment-system">Healthcare Appointment System</a></li></ul>
+        </nav>
+        <article class="project project--featured reveal" id="project-photosphere" aria-labelledby="photosphere-title">
           <ul class="tags"><li class="tag tag--accent">Featured project</li></ul>
           <div class="project__grid">
             <div class="window" role="group" aria-label="Photosphere editor preview with a before and after photo edit">
@@ -216,9 +219,9 @@
               <ul class="feature-list"><li>Sinhala text prompts</li><li>Sinhala voice input</li><li>Complex Sinhala prompt processing</li><li>Icon-based editing controls</li><li>AI-assisted photo editing</li><li>Background removal</li><li>Color enhancement</li><li>Sharpening</li><li>Noise reduction</li><li>Image upscaling</li><li>Before/after preview</li><li>Undo/redo editing history</li><li>Responsive web interface</li><li>User authentication</li><li>Gallery / export functionality</li><li>REST API backend</li><li>Swagger / OpenAPI documentation</li></ul>
               <ul class="tags"><li class="tag tag--muted">React</li><li class="tag tag--muted">FastAPI</li><li class="tag tag--muted">Python</li><li class="tag tag--muted">MongoDB</li><li class="tag tag--muted">Gemini API</li><li class="tag tag--muted">U²-Net</li><li class="tag tag--muted">AI image-processing services</li></ul>
               <div class="project__actions">
-                <span class="btn btn--secondary is-disabled" role="link" aria-disabled="true" title="Link coming soon">GitHub<svg class="icon icon--fill" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.83 1.18 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg><span class="sr-only"> (link coming soon)</span></span>
-                <span class="btn btn--primary is-disabled" role="link" aria-disabled="true" title="Link coming soon">Live Demo<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 3h6v6"></path><path d="M10 14 21 3"></path><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path></svg><span class="sr-only"> (link coming soon)</span></span>
-                <span class="btn btn--secondary is-disabled" role="link" aria-disabled="true" title="Link coming soon">Demo Video<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 9.003a1 1 0 0 1 1.517-.859l4.997 2.997a1 1 0 0 1 0 1.718l-4.997 2.997A1 1 0 0 1 9 14.996z"></path><circle cx="12" cy="12" r="10"></circle></svg><span class="sr-only"> (link coming soon)</span></span>
+                <a class="btn btn--secondary" href="https://github.com/shanukabherath-solutions/Photosphere" target="_blank" rel="noopener noreferrer">GitHub<svg class="icon icon--fill" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.83 1.18 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg><span class="sr-only"> for Photosphere (opens in a new tab)</span></a>
+                <a class="btn btn--primary" href="https://photosphere-iota.vercel.app/" target="_blank" rel="noopener noreferrer">Live Demo<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 3h6v6"></path><path d="M10 14 21 3"></path><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path></svg><span class="sr-only"> of Photosphere (opens in a new tab)</span></a>
+                <a class="btn btn--secondary" href="https://vimeo.com/1248930571/c1f9e50684?share=copy&amp;fl=sv&amp;fe=ci" target="_blank" rel="noopener noreferrer">Demo Video<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 9.003a1 1 0 0 1 1.517-.859l4.997 2.997a1 1 0 0 1 0 1.718l-4.997 2.997A1 1 0 0 1 9 14.996z"></path><circle cx="12" cy="12" r="10"></circle></svg><span class="sr-only"> of Photosphere (opens in a new tab)</span></a>
               </div>
             </div>
           </div>
@@ -278,7 +281,7 @@
             </div>
           </details>
         </article>
-        <article class="project project--aesa reveal" aria-labelledby="aesa-title">
+        <article class="project project--aesa reveal" id="project-aesa" aria-labelledby="aesa-title">
           <ul class="tags"><li class="tag tag--accent">AI Agents</li><li class="tag tag--accent">Cybersecurity</li><li class="tag tag--accent">DevSecOps</li></ul>
           <div class="project__grid">
             <div>
@@ -289,19 +292,18 @@
                   <p class="project__tagline project__tagline--tight">AI Execution Security Agent</p>
                 </div>
               </div>
-              <p class="project__summary">An AI-assisted engineering agent designed to inspect software repositories, propose code changes, and validate them through isolated execution, automated security checks, and human approval.</p>
-              <p class="project__desc project__desc--small">AESA is a security-focused AI agent project that combines repository analysis, controlled code execution, and human oversight in a structured software engineering workflow. It uses a Docker-based sandbox to execute permitted commands and integrates automated code-quality and security tools to help identify issues before code changes are accepted.</p>
+              <p class="project__summary">An AI-assisted engineering agent that inspects code, runs approved checks in a sandbox, and proposes fixes. It can never merge, push to a default branch, or deploy without explicit human approval.</p>
+              <p class="project__desc project__desc--small">AESA explores how to give a coding agent least privilege: every action the model requests passes a default-deny policy engine, runs inside a locked-down Docker sandbox, and is recorded in an audit log, so the AI model is never the security boundary. It is a learning project and has not been independently audited.</p>
               <div class="feature-groups">
-                <div><h4>Controlled execution</h4><ul><li>Restricted command execution through an allowlisted command system</li><li>Docker sandbox isolation for controlled testing</li><li>Git feature branches for proposed modifications</li></ul></div>
-                <div><h4>Quality and security checks</h4><ul><li>Code-quality checks using Ruff, mypy, and pytest</li><li>Security scanning with Bandit, Gitleaks, and Trivy</li><li>Security gates that can block progression when checks fail</li></ul></div>
-                <div><h4>Oversight and workflow</h4><ul><li>Repository analysis and task-driven code-change proposals</li><li>Human approval workflow before accepting proposed changes</li></ul></div>
-                <div><h4>Interface and delivery</h4><ul><li>Backend API and frontend dashboard for managing tasks and reviewing results</li><li>Dry-run deployment configuration (no production deployment is claimed)</li></ul></div>
+                <div><h4>Controlled execution</h4><ul><li>Default-deny policy engine evaluated before every agent action</li><li>Structured command registry and a hardened, network-less Docker sandbox</li><li>Patches go to a Git proposal branch, never the default branch</li></ul></div>
+                <div><h4>Quality and security checks</h4><ul><li>pytest, Ruff and mypy checks on the exact proposed patch</li><li>Bandit, Gitleaks and Trivy security scans</li><li>A failing or missing check blocks approval</li></ul></div>
+                <div><h4>Oversight and workflow</h4><ul><li>Human approval for the patch, plus a separate approval for deployment</li><li>Tamper-evident, hash-chained audit log</li><li>CI/CD pipeline with GitHub Actions</li></ul></div>
+                <div><h4>Interface and platform</h4><ul><li>React and TypeScript dashboard for tasks, diffs, scan results and audit logs</li><li>Argon2id password hashing, JWT authentication and role-based access control</li><li>Provider-agnostic AI layer: OpenAI-compatible, Gemini or an offline rule-based provider</li></ul></div>
               </div>
-              <ul class="tags"><li class="tag tag--muted">Python</li><li class="tag tag--muted">FastAPI</li><li class="tag tag--muted">React</li><li class="tag tag--muted">Docker</li><li class="tag tag--muted">SQLite</li><li class="tag tag--muted">Git</li><li class="tag tag--muted">pytest</li><li class="tag tag--muted">Ruff</li><li class="tag tag--muted">mypy</li><li class="tag tag--muted">Bandit</li><li class="tag tag--muted">Gitleaks</li><li class="tag tag--muted">Trivy</li></ul>
+              <ul class="tags"><li class="tag tag--muted">Python</li><li class="tag tag--muted">FastAPI</li><li class="tag tag--muted">React</li><li class="tag tag--muted">TypeScript</li><li class="tag tag--muted">Docker</li><li class="tag tag--muted">SQLite</li><li class="tag tag--muted">GitHub Actions</li><li class="tag tag--muted">pytest</li><li class="tag tag--muted">Ruff</li><li class="tag tag--muted">mypy</li><li class="tag tag--muted">Bandit</li><li class="tag tag--muted">Gitleaks</li><li class="tag tag--muted">Trivy</li></ul>
               <div class="project__actions">
-                <span class="btn btn--primary is-disabled" role="link" aria-disabled="true" title="Link coming soon">View on GitHub<svg class="icon icon--fill" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.83 1.18 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg><span class="sr-only"> (link coming soon)</span></span>
-                <span class="btn btn--secondary is-disabled" role="link" aria-disabled="true" title="Link coming soon">View Documentation<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5v16"></path><path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z"></path></svg><span class="sr-only"> (link coming soon)</span></span>
-                
+                <a class="btn btn--primary" href="https://github.com/shanukabherath-solutions/AESA" target="_blank" rel="noopener noreferrer">View on GitHub<svg class="icon icon--fill" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.83 1.18 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg><span class="sr-only"> for AESA (opens in a new tab)</span></a>
+                <a class="btn btn--secondary" href="https://github.com/shanukabherath-solutions/AESA/tree/main/docs" target="_blank" rel="noopener noreferrer">View Documentation<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5v16"></path><path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z"></path></svg><span class="sr-only"> for AESA (opens in a new tab)</span></a>
               </div>
             </div>
 
@@ -312,7 +314,7 @@
                     <span class="icon-box"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M10.7 20H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H20a2 2 0 0 1 2 2v4.1"></path><path d="m21 21-1.9-1.9"></path><circle cx="17" cy="17" r="3"></circle></svg></span>
                     <div class="pipeline__body">
                       <p class="pipeline__label">Repository analysis</p>
-                      <p class="pipeline__detail">Inspect the repository for a given task</p>
+                      <p class="pipeline__detail">The agent inspects an isolated clone of the repository</p>
                       
                     </div>
                   </li>
@@ -320,7 +322,7 @@
                     <span class="icon-box"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 6a9 9 0 0 0-9 9V3"></path><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle></svg></span>
                     <div class="pipeline__body">
                       <p class="pipeline__label">Proposed change</p>
-                      <p class="pipeline__detail">Changes proposed on a Git feature branch</p>
+                      <p class="pipeline__detail">A patch is proposed on a Git feature branch</p>
                       <ul class="tags"><li class="tag">Git</li></ul>
                     </div>
                   </li>
@@ -352,7 +354,7 @@
                     <span class="icon-box"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m16 11 2 2 4-4"></path><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg></span>
                     <div class="pipeline__body">
                       <p class="pipeline__label">Human approval</p>
-                      <p class="pipeline__detail">A person reviews before changes are accepted</p>
+                      <p class="pipeline__detail">A person approves the patch; deployment needs a second approval</p>
                       
                     </div>
                   </li>
@@ -361,27 +363,52 @@
             </div>
           </div>
         </article>
+        <h3 class="group-label">More projects</h3>
+        <div class="grid-auto">
+          <article class="card card--pad mini reveal" id="project-no-exit-online">
+            <div class="mini__top"><span class="tag tag--muted">Project</span></div>
+            <h4 class="mini__title">No Exit Online</h4>
+            <p class="mini__desc">A personal software project by Shanuka B. Herath. The source code and project details are in the GitHub repository.</p>
+            
+            <div class="mini__link"><a class="btn btn--link" href="https://github.com/shanukabherath-solutions/No-Exit-Online" target="_blank" rel="noopener noreferrer">View on GitHub<svg class="icon icon--fill" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.83 1.18 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg><span class="sr-only"> for No Exit Online (opens in a new tab)</span></a></div>
+          </article>
+          <article class="card card--pad mini reveal" data-d="1" id="project-q-learning-agent">
+            <div class="mini__top"><span class="tag tag--muted">Reinforcement Learning</span></div>
+            <h4 class="mini__title">Q-Learning Agent</h4>
+            <p class="mini__desc">A tabular Q-learning agent that learns to reach a goal in a 2-D grid world, with a Tkinter GUI and live training graphs. It compares standard Q-learning with reward shaping from a distance heuristic, which in the repository’s measurements reaches reliable performance in about 6.5× fewer episodes.</p>
+            <ul class="tags"><li class="tag">Python</li><li class="tag">NumPy</li><li class="tag">Matplotlib</li><li class="tag">Tkinter</li><li class="tag">pytest</li></ul>
+            <div class="mini__link"><a class="btn btn--link" href="https://github.com/shanukabherath-solutions/q-learning-agent" target="_blank" rel="noopener noreferrer">View on GitHub<svg class="icon icon--fill" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.83 1.18 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg><span class="sr-only"> for Q-Learning Agent (opens in a new tab)</span></a></div>
+          </article>
+          <article class="card card--pad mini reveal" data-d="2" id="project-healthcare-appointment-system">
+            <div class="mini__top"><span class="tag tag--muted">Desktop Application</span></div>
+            <h4 class="mini__title">Healthcare Appointment System</h4>
+            <p class="mini__desc">A Java Swing desktop application for managing healthcare appointments. Patients register and book appointments, administrators manage them from a dashboard, and confirmation emails are sent with JavaMail, with data stored in MongoDB.</p>
+            <ul class="tags"><li class="tag">Java</li><li class="tag">Swing</li><li class="tag">MongoDB</li><li class="tag">JavaMail API</li><li class="tag">MVC</li></ul>
+            <div class="mini__link"><a class="btn btn--link" href="https://github.com/shanukabherath-solutions/healthcare-appointment-system" target="_blank" rel="noopener noreferrer">View on GitHub<svg class="icon icon--fill" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.83 1.18 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg><span class="sr-only"> for Healthcare Appointment System (opens in a new tab)</span></a></div>
+          </article>
+        </div>
+        <h3 class="group-label">Cybersecurity practice projects</h3>
         <div class="grid-auto">
           <article class="card card--pad mini reveal">
             <div class="mini__top"><span class="tag tag--muted">Cybersecurity</span></div>
-            <h3 class="mini__title">Password Strength Analyzer</h3>
+            <h4 class="mini__title">Password Strength Analyzer</h4>
             <p class="mini__desc">A Python-based application that evaluates password strength and gives feedback on how it could be improved.</p>
             <ul class="tags"><li class="tag">Python</li></ul>
-            <div class="mini__link"><span class="btn btn--link is-disabled" role="link" aria-disabled="true" title="Link coming soon">View on GitHub<svg class="icon icon--fill" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.83 1.18 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg><span class="sr-only"> (link coming soon)</span></span></div>
+            
           </article>
           <article class="card card--pad mini reveal" data-d="1">
             <div class="mini__top"><span class="tag tag--muted">Cybersecurity</span></div>
-            <h3 class="mini__title">File Encryption App</h3>
+            <h4 class="mini__title">File Encryption App</h4>
             <p class="mini__desc">An application that demonstrates AES-based file encryption and decryption.</p>
             <ul class="tags"><li class="tag">Python</li><li class="tag">AES</li></ul>
-            <div class="mini__link"><span class="btn btn--link is-disabled" role="link" aria-disabled="true" title="Link coming soon">View on GitHub<svg class="icon icon--fill" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.83 1.18 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg><span class="sr-only"> (link coming soon)</span></span></div>
+            
           </article>
           <article class="card card--pad mini reveal" data-d="2">
             <div class="mini__top"><span class="tag tag--muted">Cybersecurity</span></div>
-            <h3 class="mini__title">Secure Login System</h3>
+            <h4 class="mini__title">Secure Login System</h4>
             <p class="mini__desc">A simple authentication system demonstrating password hashing and secure login concepts.</p>
             <ul class="tags"><li class="tag">Python</li></ul>
-            <div class="mini__link"><span class="btn btn--link is-disabled" role="link" aria-disabled="true" title="Link coming soon">View on GitHub<svg class="icon icon--fill" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.83 1.18 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg><span class="sr-only"> (link coming soon)</span></span></div>
+            
           </article>
         </div>
         </div>
@@ -396,14 +423,21 @@
         <div class="section__body">
           <ol class="timeline">
             <li class="card card--pad role reveal">
+              <div class="role__top"><h3 class="role__title">Freelance Software Developer</h3></div>
+              <p class="role__org">Freelance <span aria-hidden="true">&middot;</span> via <a class="inline-link" href="https://www.fiverr.com/users/shanukabherath" target="_blank" rel="noopener noreferrer">Fiverr<span class="sr-only"> profile (opens in a new tab)</span></a></p>
+              <p class="role__sum">Freelance software development work offered through a Fiverr seller profile.</p>
+              
+              <div class="role__actions"><a class="btn btn--secondary" href="https://www.fiverr.com/users/shanukabherath" target="_blank" rel="noopener noreferrer">View Fiverr profile<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 3h6v6"></path><path d="M10 14 21 3"></path><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path></svg><span class="sr-only"> (opens in a new tab)</span></a></div>
+            </li>
+            <li class="card card--pad role reveal" data-d="1">
               <div class="role__top"><h3 class="role__title">Graphic Designer</h3><span class="role__period">April 2023 – October 2023</span></div>
               <p class="role__org">Multimedia Studio</p>
               <p class="role__sum">Worked on visual design and image editing for client projects, before moving into software development.</p>
               <ul class="tags"><li class="tag">Visual design and layout for client projects</li><li class="tag">Branding-related design work</li><li class="tag">Image editing</li><li class="tag">Client-oriented design work</li></ul>
+              
             </li>
-            <li class="note-dashed reveal" data-d="1">Further software-development or freelance experience will appear here as it’s added.</li>
           </ol>
-          <p class="design-note reveal" data-d="2">This design background carries over into how I build interfaces today — I think about layout, hierarchy, and visual polish alongside functionality, not after it.</p>
+          <p class="design-note reveal" data-d="1">This design background carries over into how I build interfaces today — I think about layout, hierarchy, and visual polish alongside functionality, not after it.</p>
         </div>
       </div>
     </section>
@@ -446,12 +480,28 @@
             <article class="card card--pad cert reveal">
               <span class="icon-box"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"></path><circle cx="12" cy="8" r="6"></circle></svg></span>
               <div>
-                <h3 class="cert__name">Microsoft AI Concepts</h3>
-                <p class="cert__issuer">Microsoft</p>
+                <h3 class="cert__name">Burp Suite (Web Security)</h3>
+                <p class="cert__issuer">PortSwigger</p>
                 <span class="tag tag--accent">Completed</span>
               </div>
             </article>
             <article class="card card--pad cert reveal" data-d="1">
+              <span class="icon-box"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"></path><circle cx="12" cy="8" r="6"></circle></svg></span>
+              <div>
+                <h3 class="cert__name">Certified Artificial Intelligence Security &amp; Risk (CAISR)</h3>
+                <p class="cert__issuer">Red Team Leaders</p>
+                <span class="tag tag--accent">Completed</span>
+              </div>
+            </article>
+            <article class="card card--pad cert reveal" data-d="2">
+              <span class="icon-box"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"></path><circle cx="12" cy="8" r="6"></circle></svg></span>
+              <div>
+                <h3 class="cert__name">Future in Quality Assurance</h3>
+                <p class="cert__issuer">SLIIT City UNI</p>
+                <span class="tag tag--accent">Completed</span>
+              </div>
+            </article>
+            <article class="card card--pad cert reveal">
               <span class="icon-box"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"></path><circle cx="12" cy="8" r="6"></circle></svg></span>
               <div>
                 <h3 class="cert__name">IBM Python 101</h3>
@@ -459,7 +509,7 @@
                 <span class="tag tag--accent">Completed</span>
               </div>
             </article>
-            <article class="card card--pad cert reveal" data-d="2">
+            <article class="card card--pad cert reveal" data-d="1">
               <span class="icon-box"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"></path><circle cx="12" cy="8" r="6"></circle></svg></span>
               <div>
                 <h3 class="cert__name">Introduction to Machine Learning</h3>
@@ -467,31 +517,7 @@
                 <span class="tag tag--accent">Completed</span>
               </div>
             </article>
-            <article class="card card--pad cert reveal">
-              <span class="icon-box"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"></path><circle cx="12" cy="8" r="6"></circle></svg></span>
-              <div>
-                <h3 class="cert__name">Certified Artificial Intelligence Security &amp; Risk</h3>
-                <p class="cert__issuer">CAISR</p>
-                <span class="tag tag--accent">Completed</span>
-              </div>
-            </article>
-            <article class="card card--pad cert reveal" data-d="1">
-              <span class="icon-box"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"></path><circle cx="12" cy="8" r="6"></circle></svg></span>
-              <div>
-                <h3 class="cert__name">Burp Suite (Web Security)</h3>
-                <p class="cert__issuer">PortSwigger</p>
-                <span class="tag tag--accent">Completed</span>
-              </div>
-            </article>
             <article class="card card--pad cert reveal" data-d="2">
-              <span class="icon-box"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"></path><circle cx="12" cy="8" r="6"></circle></svg></span>
-              <div>
-                <h3 class="cert__name">AI concepts for developers and technology professionals</h3>
-                <p class="cert__issuer">Microsoft</p>
-                <span class="tag tag--accent">Completed</span>
-              </div>
-            </article>
-            <article class="card card--pad cert reveal">
               <span class="icon-box"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"></path><circle cx="12" cy="8" r="6"></circle></svg></span>
               <div>
                 <h3 class="cert__name">Introduction to DevOps and Site Reliability Engineering</h3>
@@ -499,6 +525,30 @@
                 <span class="tag tag--accent">Completed</span>
               </div>
             </article>
+          </div>
+          <div class="cert-groups">
+          <article class="card card--pad cert-group reveal">
+            <div class="cert-group__head">
+              <span class="icon-box"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"></path><circle cx="12" cy="8" r="6"></circle></svg></span>
+              <div>
+                <h3 class="cert__name">Microsoft</h3>
+                <p class="cert__issuer">Issuer: Microsoft</p>
+              </div>
+              <span class="tag tag--accent cert-group__status">Completed</span>
+            </div>
+            <ul class="feature-list cert-group__list"><li>Introduction to AI concepts</li><li>Introduction to generative AI and agents</li><li>Introduction to natural language processing concepts</li><li>Introduction to machine learning concepts</li><li>Introduction to AI speech concepts</li><li>Introduction to computer vision concepts</li><li>Introduction to AI-powered information extraction concepts</li><li>AI concepts for developers and technology professionals</li><li>Explore and analyze data with Python</li></ul>
+          </article>
+          <article class="card card--pad cert-group reveal" data-d="1">
+            <div class="cert-group__head">
+              <span class="icon-box"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5v16"></path><path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z"></path></svg></span>
+              <div>
+                <h3 class="cert__name">Other self-learning</h3>
+                <p class="cert__issuer">Self-directed learning</p>
+              </div>
+              <span class="tag tag--muted cert-group__status">Self-learning</span>
+            </div>
+            <ul class="feature-list cert-group__list"><li>AI Security, CI/CD, LLM Risks, OWASP Top 10 &amp; DevSecOps</li><li>Game Security Lab - DevSecOps Masterclass</li></ul>
+          </article>
           </div>
         </div>
       </div>

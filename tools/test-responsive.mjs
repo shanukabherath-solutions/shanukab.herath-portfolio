@@ -56,6 +56,12 @@ function pageChecks() {
   res.hero = { h1: box(".hero__title"), role: box(".hero__role"), lead: box(".hero__lead"), actions: box(".hero__actions"), avatar: box(".hero__avatar img"), panel: box(".hero__panel") };
   const h1 = document.querySelector(".hero__title");
   res.hero.h1Lines = Math.round(h1.getBoundingClientRect().height / parseFloat(getComputedStyle(h1).lineHeight));
+  const roleEl = document.querySelector(".hero__role");
+  res.hero.roleFs = parseFloat(getComputedStyle(roleEl).fontSize);
+  res.hero.roleLines = Math.round(roleEl.getBoundingClientRect().height / parseFloat(getComputedStyle(roleEl).lineHeight));
+  res.hero.roleSepVisible = getComputedStyle(document.querySelector(".hero__sep")).display !== "none";
+  res.hero.textColW = document.querySelector(".hero__text").getBoundingClientRect().width;
+  res.hero.roleTextW = (() => { const r = document.createRange(); r.selectNodeContents(roleEl); return Math.max(...[...r.getClientRects()].map((x) => x.right)) - roleEl.getBoundingClientRect().left; })();
 
   document.querySelectorAll("img").forEach((i) => { if (i.loading !== "lazy" && !(i.complete && i.naturalWidth > 0)) res.brokenImages.push(i.src); });
   return res;
@@ -98,6 +104,13 @@ for (const w of WIDTHS) {
     if (!b) { fail(`hero ${name} missing`); continue; }
     if (b.left < 0 || b.right > r.vw) fail(`hero ${name} outside viewport: ${b.left}..${b.right} (vw ${r.vw})`);
   }
+  if (r.hero.h1Lines !== 1) fail(`name wraps onto ${r.hero.h1Lines} lines (must be one line)`);
+  const wide = r.hero.textColW >= 29 * 16; // headline is meant to be one line when its column is >= 29rem
+  if (wide && r.hero.roleLines !== 1) fail(`headline wraps onto ${r.hero.roleLines} lines although its column is ${Math.round(r.hero.textColW)}px wide`);
+  if (wide && !r.hero.roleSepVisible) fail("headline separator hidden on a one-line headline");
+  if (wide && r.hero.roleTextW > r.hero.textColW + 0.5) fail(`headline text ${Math.round(r.hero.roleTextW)}px overflows its ${Math.round(r.hero.textColW)}px column`);
+  if (wide && r.hero.roleFs < 15.5) fail(`headline font too small: ${r.hero.roleFs}px`);
+  console.log(`    headline: ${r.hero.roleLines} line(s) at ${r.hero.roleFs.toFixed(1)}px, separator ${r.hero.roleSepVisible ? "shown" : "stacked"}`);
   console.log(`    hero h1 ${h1.w}px wide, ${r.hero.h1Lines} line(s), ${h1.fs}; lead ${lead.w}px wide; avatar ${avatar.w}px; docScrollW ${r.docScrollW}/${r.vw}`);
 
   // full-page screenshot (after reveals have fired)
@@ -155,16 +168,57 @@ console.log("\n== Functional checks (375px) ==");
   const hosts = [...new Set(ext.map((l) => new URL(l.href).hostname || "(local)"))];
   console.log(`    external links: ${ext.length} (${hosts.join(", ")})`);
 
-  // links that should exist and point at the right places
-  const hrefs = await page.evaluate(() => [...document.querySelectorAll("a[href]")].map((a) => a.getAttribute("href")));
-  for (const must of ["https://github.com/shanukabherath-solutions", "https://www.linkedin.com/in/shanuka-b-herath/", "mailto:shanbhera@gmail.com", "cv/shanuka-herath-cv.pdf"]) {
-    if (!hrefs.includes(must)) fail("expected link missing: " + must);
+  // every supplied URL must be present, open in a new tab and carry noopener
+  const SUPPLIED = {
+    "Fiverr profile": "https://www.fiverr.com/users/shanukabherath",
+    "Photosphere GitHub": "https://github.com/shanukabherath-solutions/Photosphere",
+    "Photosphere live demo": "https://photosphere-iota.vercel.app/",
+    "Photosphere demo video": "https://vimeo.com/1248930571/c1f9e50684?share=copy&fl=sv&fe=ci",
+    "AESA GitHub": "https://github.com/shanukabherath-solutions/AESA",
+    "AESA documentation": "https://github.com/shanukabherath-solutions/AESA/tree/main/docs",
+    "No Exit Online GitHub": "https://github.com/shanukabherath-solutions/No-Exit-Online",
+    "Q-Learning Agent GitHub": "https://github.com/shanukabherath-solutions/q-learning-agent",
+    "Healthcare Appointment System GitHub": "https://github.com/shanukabherath-solutions/healthcare-appointment-system",
+  };
+  const anchors = await page.evaluate(() => [...document.querySelectorAll("a[href]")].map((a) => ({ href: a.getAttribute("href"), target: a.target, rel: a.rel, name: (a.textContent || "").replace(/\s+/g, " ").trim() })));
+  for (const [label, url] of Object.entries(SUPPLIED)) {
+    const found = anchors.filter((a) => a.href === url);
+    if (!found.length) { fail(`supplied link missing: ${label} -> ${url}`); continue; }
+    for (const a of found) {
+      if (a.target !== "_blank" || !/noopener/.test(a.rel)) fail(`${label}: must open in a new tab with rel=noopener (${a.target}, ${a.rel})`);
+      if (!a.name) fail(`${label}: link has no accessible text`);
+    }
   }
-  // disabled placeholder buttons are not links
-  const disabled = await page.locator(".btn.is-disabled").count();
-  const disabledAnchors = await page.locator("a.btn.is-disabled").count();
-  if (disabledAnchors) fail("disabled button rendered as <a>");
-  console.log(`    placeholder (disabled) buttons: ${disabled}`);
+  console.log(`    supplied links: ${Object.keys(SUPPLIED).length} present, new tab + noopener`);
+  for (const must of ["https://github.com/shanukabherath-solutions", "https://www.linkedin.com/in/shanuka-b-herath/", "mailto:shanbhera@gmail.com", "cv/shanuka-herath-cv.pdf"]) {
+    if (!anchors.some((a) => a.href === must)) fail("expected link missing: " + must);
+  }
+  // no empty/placeholder links anywhere
+  const badLinks = anchors.filter((a) => !a.href || a.href === "#" || /YOUR_|example\.com/i.test(a.href));
+  badLinks.forEach((a) => fail("placeholder/empty link: " + JSON.stringify(a)));
+  const text = await page.evaluate(() => document.body.innerText + " " + document.documentElement.innerHTML);
+  for (const bad of ["coming soon", "is-disabled", "aria-disabled", "YOUR_", "will appear here as it"]) if (new RegExp(bad, "i").test(text)) fail(`placeholder text found: "${bad}"`);
+  console.log("    no placeholder links or 'coming soon' text");
+
+  // content checks for this update
+  const content = await page.evaluate(() => ({
+    projects: [...document.querySelectorAll("#projects article")].map((a) => a.querySelector("h3,h4")?.textContent.trim()),
+    index: [...document.querySelectorAll(".project-index a")].map((a) => a.getAttribute("href")).filter((h) => !document.querySelector(h)),
+    ids: (() => { const seen = {}; const dup = []; document.querySelectorAll("[id]").forEach((e) => { if (seen[e.id]) dup.push(e.id); seen[e.id] = 1; }); return dup; })(),
+    roles: [...document.querySelectorAll("#experience .role__title")].map((e) => e.textContent.trim()),
+    certs: [...document.querySelectorAll("#certifications h3")].map((e) => e.textContent.trim()),
+    msItems: document.querySelectorAll("#certifications .cert-group")[0]?.querySelectorAll("li").length,
+    selfItems: [...(document.querySelectorAll("#certifications .cert-group")[1]?.querySelectorAll("li") || [])].map((e) => e.textContent.trim()),
+  }));
+  for (const t of ["Photosphere", "AESA", "No Exit Online", "Q-Learning Agent", "Healthcare Appointment System"]) if (!content.projects.includes(t)) fail("project card missing: " + t);
+  if (content.index.length) fail("project index points to missing ids: " + content.index);
+  if (content.ids.length) fail("duplicate ids: " + content.ids);
+  if (!content.roles.includes("Freelance Software Developer")) fail("freelance experience entry missing");
+  for (const t of ["Burp Suite (Web Security)", "Certified Artificial Intelligence Security & Risk (CAISR)", "Future in Quality Assurance", "Microsoft", "Other self-learning"]) if (!content.certs.includes(t)) fail("certification missing: " + t);
+  if (content.msItems !== 9) fail("Microsoft group should list 9 items, got " + content.msItems);
+  if (content.selfItems.length !== 2) fail("self-learning should list 2 items");
+  console.log(`    projects: ${content.projects.join(" / ")}`);
+  console.log(`    experience: ${content.roles.join(" / ")}; certifications: ${content.certs.length} cards (Microsoft group: ${content.msItems} items)`);
 
   // CV + metadata files reachable
   for (const p of ["/cv/shanuka-herath-cv.pdf", "/favicon.ico", "/robots.txt", "/sitemap.xml", "/manifest.webmanifest", "/assets/img/og-image.png", "/_headers"]) {

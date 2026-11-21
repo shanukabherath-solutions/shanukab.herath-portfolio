@@ -2,15 +2,18 @@
   "name": "shanuka-portfolio-static",
   "version": "1.0.0",
   "private": true,
-  "description": "Static portfolio for Shanuka B. Herath — plain HTML, CSS and vanilla JS, built for Cloudflare Pages.",
+  "description": "Static portfolio for Shanuka B. Herath \u2014 plain HTML, CSS and vanilla JS, built for Cloudflare Pages.",
   "type": "module",
   "scripts": {
     "build": "node scripts/build.mjs",
     "preview": "node scripts/serve.mjs",
     "og": "node scripts/make-og.mjs",
-    "test:responsive": "node tools/test-responsive.mjs"
+    "test:responsive": "node tools/test-responsive.mjs",
+    "check:links": "node tools/check-links.mjs"
   },
-  "engines": { "node": ">=18" },
+  "engines": {
+    "node": ">=18"
+  },
   "devDependencies": {
     "esbuild": "^0.25.0",
     "playwright": "^1.50.0"

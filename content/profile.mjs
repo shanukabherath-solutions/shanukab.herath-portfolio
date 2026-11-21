@@ -89,11 +89,10 @@ export const featuredProject = {
     "Gallery / export functionality", "REST API backend", "Swagger / OpenAPI documentation",
   ],
   technologies: ["React", "FastAPI", "Python", "MongoDB", "Gemini API", "U\u00B2-Net", "AI image-processing services"],
-  // Empty href = placeholder: rendered as a disabled button until you add the URL.
   links: {
-    github: { label: "GitHub", href: "" },
-    liveDemo: { label: "Live Demo", href: "" },
-    demoVideo: { label: "Demo Video", href: "" },
+    github: { label: "GitHub", href: "https://github.com/shanukabherath-solutions/Photosphere" },
+    liveDemo: { label: "Live Demo", href: "https://photosphere-iota.vercel.app/" },
+    demoVideo: { label: "Demo Video", href: "https://vimeo.com/1248930571/c1f9e50684?share=copy&fl=sv&fe=ci" },
   },
   media: {
     before: "assets/img/photosphere-before.webp",
@@ -123,39 +122,83 @@ export const aesaProject = {
   fullName: "AI Execution Security Agent",
   categories: ["AI Agents", "Cybersecurity", "DevSecOps"],
   summary:
-    "An AI-assisted engineering agent designed to inspect software repositories, propose code changes, and validate them through isolated execution, automated security checks, and human approval.",
+    "An AI-assisted engineering agent that inspects code, runs approved checks in a sandbox, and proposes fixes. It can never merge, push to a default branch, or deploy without explicit human approval.",
   description:
-    "AESA is a security-focused AI agent project that combines repository analysis, controlled code execution, and human oversight in a structured software engineering workflow. It uses a Docker-based sandbox to execute permitted commands and integrates automated code-quality and security tools to help identify issues before code changes are accepted.",
+    "AESA explores how to give a coding agent least privilege: every action the model requests passes a default-deny policy engine, runs inside a locked-down Docker sandbox, and is recorded in an audit log, so the AI model is never the security boundary. It is a learning project and has not been independently audited.",
   featureGroups: [
-    { group: "Controlled execution", items: ["Restricted command execution through an allowlisted command system", "Docker sandbox isolation for controlled testing", "Git feature branches for proposed modifications"] },
-    { group: "Quality and security checks", items: ["Code-quality checks using Ruff, mypy, and pytest", "Security scanning with Bandit, Gitleaks, and Trivy", "Security gates that can block progression when checks fail"] },
-    { group: "Oversight and workflow", items: ["Repository analysis and task-driven code-change proposals", "Human approval workflow before accepting proposed changes"] },
-    { group: "Interface and delivery", items: ["Backend API and frontend dashboard for managing tasks and reviewing results", "Dry-run deployment configuration (no production deployment is claimed)"] },
+    { group: "Controlled execution", items: ["Default-deny policy engine evaluated before every agent action", "Structured command registry and a hardened, network-less Docker sandbox", "Patches go to a Git proposal branch, never the default branch"] },
+    { group: "Quality and security checks", items: ["pytest, Ruff and mypy checks on the exact proposed patch", "Bandit, Gitleaks and Trivy security scans", "A failing or missing check blocks approval"] },
+    { group: "Oversight and workflow", items: ["Human approval for the patch, plus a separate approval for deployment", "Tamper-evident, hash-chained audit log", "CI/CD pipeline with GitHub Actions"] },
+    { group: "Interface and platform", items: ["React and TypeScript dashboard for tasks, diffs, scan results and audit logs", "Argon2id password hashing, JWT authentication and role-based access control", "Provider-agnostic AI layer: OpenAI-compatible, Gemini or an offline rule-based provider"] },
   ],
-  technologies: ["Python", "FastAPI", "React", "Docker", "SQLite", "Git", "pytest", "Ruff", "mypy", "Bandit", "Gitleaks", "Trivy"],
+  technologies: ["Python", "FastAPI", "React", "TypeScript", "Docker", "SQLite", "GitHub Actions", "pytest", "Ruff", "mypy", "Bandit", "Gitleaks", "Trivy"],
   // Simplified, illustrative workflow diagram (not a screenshot). `icon` keys live in scripts/icons.mjs.
   pipeline: [
-    { label: "Repository analysis", icon: "folderSearch", detail: "Inspect the repository for a given task" },
-    { label: "Proposed change", icon: "gitBranch", detail: "Changes proposed on a Git feature branch", tools: ["Git"] },
+    { label: "Repository analysis", icon: "folderSearch", detail: "The agent inspects an isolated clone of the repository" },
+    { label: "Proposed change", icon: "gitBranch", detail: "A patch is proposed on a Git feature branch", tools: ["Git"] },
     { label: "Docker sandbox", icon: "container", detail: "Allowlisted commands run in isolation", tools: ["Docker"] },
     { label: "Quality checks", icon: "listChecks", detail: "Lint, type and test checks", tools: ["Ruff", "mypy", "pytest"] },
     { label: "Security scans", icon: "shield", detail: "Code, secrets and dependency/image scanning", tools: ["Bandit", "Gitleaks", "Trivy"] },
-    { label: "Human approval", icon: "userCheck", detail: "A person reviews before changes are accepted" },
+    { label: "Human approval", icon: "userCheck", detail: "A person approves the patch; deployment needs a second approval" },
   ],
   links: {
-    github: { label: "View on GitHub", href: "" },
-    documentation: { label: "View Documentation", href: "" },
-    screenshots: { label: "View Screenshots", href: "" }, // empty = hidden
+    github: { label: "View on GitHub", href: "https://github.com/shanukabherath-solutions/AESA" },
+    documentation: { label: "View Documentation", href: "https://github.com/shanukabherath-solutions/AESA/tree/main/docs" },
   },
 };
 
-export const smallProjects = [
-  { title: "Password Strength Analyzer", category: "Cybersecurity", description: "A Python-based application that evaluates password strength and gives feedback on how it could be improved.", technologies: ["Python"], status: "Completed", github: "" },
-  { title: "File Encryption App", category: "Cybersecurity", description: "An application that demonstrates AES-based file encryption and decryption.", technologies: ["Python", "AES"], status: "Completed", github: "" },
-  { title: "Secure Login System", category: "Cybersecurity", description: "A simple authentication system demonstrating password hashing and secure login concepts.", technologies: ["Python"], status: "Completed", github: "" },
+/**
+ * Smaller project cards, shown under the two featured projects.
+ * Only the descriptions/technologies stated in each repository's README are used.
+ */
+export const moreProjects = [
+  {
+    id: "no-exit-online",
+    title: "No Exit Online",
+    category: "Project",
+    // The repository's README could not be read when this card was written (the repo returned 404 to
+    // anonymous visitors), so the description is deliberately generic. Replace it with the real
+    // description and technologies once the repository is public.
+    description: "A personal software project by Shanuka B. Herath. The source code and project details are in the GitHub repository.",
+    technologies: [],
+    github: "https://github.com/shanukabherath-solutions/No-Exit-Online",
+  },
+  {
+    id: "q-learning-agent",
+    title: "Q-Learning Agent",
+    category: "Reinforcement Learning",
+    description:
+      "A tabular Q-learning agent that learns to reach a goal in a 2-D grid world, with a Tkinter GUI and live training graphs. It compares standard Q-learning with reward shaping from a distance heuristic, which in the repository's measurements reaches reliable performance in about 6.5\u00D7 fewer episodes.",
+    technologies: ["Python", "NumPy", "Matplotlib", "Tkinter", "pytest"],
+    github: "https://github.com/shanukabherath-solutions/q-learning-agent",
+  },
+  {
+    id: "healthcare-appointment-system",
+    title: "Healthcare Appointment System",
+    category: "Desktop Application",
+    description:
+      "A Java Swing desktop application for managing healthcare appointments. Patients register and book appointments, administrators manage them from a dashboard, and confirmation emails are sent with JavaMail, with data stored in MongoDB.",
+    technologies: ["Java", "Swing", "MongoDB", "JavaMail API", "MVC"],
+    github: "https://github.com/shanukabherath-solutions/healthcare-appointment-system",
+  },
+];
+
+/** Earlier practice projects carried over from the original portfolio. No public links, so none are shown. */
+export const practiceProjects = [
+  { title: "Password Strength Analyzer", category: "Cybersecurity", description: "A Python-based application that evaluates password strength and gives feedback on how it could be improved.", technologies: ["Python"] },
+  { title: "File Encryption App", category: "Cybersecurity", description: "An application that demonstrates AES-based file encryption and decryption.", technologies: ["Python", "AES"] },
+  { title: "Secure Login System", category: "Cybersecurity", description: "A simple authentication system demonstrating password hashing and secure login concepts.", technologies: ["Python"] },
 ];
 
 export const experience = [
+  {
+    role: "Freelance Software Developer",
+    organisation: "Freelance",
+    platform: { label: "Fiverr", href: "https://www.fiverr.com/users/shanukabherath" },
+    period: "",
+    summary: "Freelance software development work offered through a Fiverr seller profile.",
+    highlights: [],
+  },
   {
     role: "Graphic Designer",
     organisation: "Multimedia Studio",
@@ -164,7 +207,6 @@ export const experience = [
     highlights: ["Visual design and layout for client projects", "Branding-related design work", "Image editing", "Client-oriented design work"],
   },
 ];
-export const experienceNote = "Further software-development or freelance experience will appear here as it's added.";
 export const graphicDesignNote =
   "This design background carries over into how I build interfaces today — I think about layout, hierarchy, and visual polish alongside functionality, not after it.";
 
@@ -173,14 +215,45 @@ export const education = [
   { qualification: "HND in IT", institution: "SCU \u2013 SLIIT City University", status: "Completed", detail: "" },
 ];
 
+/** Single credentials. */
 export const certifications = [
-  { name: "Microsoft AI Concepts", issuer: "Microsoft", status: "Completed" },
+  { name: "Burp Suite (Web Security)", issuer: "PortSwigger", status: "Completed" },
+  { name: "Certified Artificial Intelligence Security & Risk (CAISR)", issuer: "Red Team Leaders", status: "Completed" },
+  { name: "Future in Quality Assurance", issuer: "SLIIT City UNI", status: "Completed" },
   { name: "IBM Python 101", issuer: "IBM / Cognitive Class", status: "Completed" },
   { name: "Introduction to Machine Learning", issuer: "Kaggle", status: "Completed" },
-  { name: "Certified Artificial Intelligence Security & Risk", issuer: "CAISR", status: "Completed" },
-  { name: "Burp Suite (Web Security)", issuer: "PortSwigger", status: "Completed" },
-  { name: "AI concepts for developers and technology professionals", issuer: "Microsoft", status: "Completed" },
   { name: "Introduction to DevOps and Site Reliability Engineering", issuer: "LFS162", status: "Completed" },
+];
+
+/** Several credentials grouped under one issuer, plus self-directed learning (no issuer or status claimed). */
+export const certificationGroups = [
+  {
+    title: "Microsoft",
+    kind: "issuer",
+    subtitle: "Issuer: Microsoft",
+    status: "Completed",
+    items: [
+      "Introduction to AI concepts",
+      "Introduction to generative AI and agents",
+      "Introduction to natural language processing concepts",
+      "Introduction to machine learning concepts",
+      "Introduction to AI speech concepts",
+      "Introduction to computer vision concepts",
+      "Introduction to AI-powered information extraction concepts",
+      "AI concepts for developers and technology professionals",
+      "Explore and analyze data with Python",
+    ],
+  },
+  {
+    title: "Other self-learning",
+    kind: "self",
+    subtitle: "Self-directed learning",
+    status: "",
+    items: [
+      "AI Security, CI/CD, LLM Risks, OWASP Top 10 & DevSecOps",
+      "Game Security Lab - DevSecOps Masterclass",
+    ],
+  },
 ];
 
 export const services = [

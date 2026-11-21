@@ -13,7 +13,7 @@ import { transform } from "esbuild";
 import { lucide } from "./icons.mjs";
 import {
   siteConfig as site, about, skillGroups, featuredProject as photo, aesaProject as aesa,
-  smallProjects, experience, experienceNote, graphicDesignNote, education, certifications,
+  moreProjects, practiceProjects, experience, graphicDesignNote, education, certifications, certificationGroups,
   services, servicesNote,
 } from "../content/profile.mjs";
 
@@ -40,15 +40,16 @@ const BRAND = {
 const rc = (base = "", step = 0) =>
   `class="${(base + " reveal").trim()}"${step ? ` data-d="${Math.min(step, 8)}"` : ""}`;
 
-/** A button/link that renders as a disabled placeholder when href is empty. */
-function action({ href, label, variant = "secondary", ic = "", external = true, extra = "" }) {
+/**
+ * A button-style link. Returns "" when there is no href, so a link that isn't set up yet is simply not shown
+ * (the site never renders "coming soon" placeholders). `srContext` extends the accessible name, e.g. " for Photosphere".
+ */
+function action({ href, label, variant = "secondary", ic = "", external = true, extra = "", srContext = "" }) {
+  if (!href) return "";
   const cls = `btn btn--${variant}${extra ? " " + extra : ""}`;
-  const inner = `${esc(label)}${ic}`;
-  if (!href) {
-    return `<span class="${cls} is-disabled" role="link" aria-disabled="true" title="Link coming soon">${inner}<span class="sr-only"> (link coming soon)</span></span>`;
-  }
+  const sr = external ? `<span class="sr-only">${esc(srContext)} (opens in a new tab)</span>` : "";
   const rel = external ? ` target="_blank" rel="noopener noreferrer"` : "";
-  return `<a class="${cls}" href="${esc(href)}"${rel}>${inner}</a>`;
+  return `<a class="${cls}" href="${esc(href)}"${rel}>${esc(label)}${ic}${sr}</a>`;
 }
 
 const tags = (items, tone = "") =>
@@ -125,7 +126,7 @@ function hero() {
         <div class="hero__text">
           <p class="prompt"><span>$</span> whoami</p>
           <h1 class="hero__title" id="hero-title">${esc(site.heroHeadline)}</h1>
-          <p class="hero__role">${site.role.split(" | ").map((part, i) => (i ? `<span class="hero__sep" aria-hidden="true">|</span><span class="sr-only">, </span>` : "") + `<span>${esc(part)}</span>`).join("")}</p>
+          <p class="hero__role">${site.role.split(" | ").map((part, i) => (i ? `<span class="hero__sep" aria-hidden="true">|</span><span class="sr-only">, </span>` : "") + `<span class="hero__role-part">${esc(part)}</span>`).join("")}</p>
           <p class="hero__lead">${esc(site.heroSubhead)}</p>
           <div class="hero__actions">
             <a class="btn btn--primary" href="#projects">View My Projects ${icon("arrowUpRight")}</a>
@@ -179,7 +180,7 @@ function photosphere() {
   const tools = [["scissors", "Background removal"], ["palette", "Colour enhancement"], ["sparkles", "Sharpening"], ["waves", "Noise reduction"], ["maximize", "Upscaling"]];
   const p = photo;
   return `
-        <article ${rc("project project--featured")} aria-labelledby="photosphere-title">
+        <article ${rc("project project--featured")} id="project-photosphere" aria-labelledby="photosphere-title">
           <ul class="tags"><li class="tag tag--accent">Featured project</li></ul>
           <div class="project__grid">
             <div class="window" role="group" aria-label="Photosphere editor preview with a before and after photo edit">
@@ -207,9 +208,9 @@ function photosphere() {
               <ul class="feature-list">${p.features.map((f) => `<li>${esc(f)}</li>`).join("")}</ul>
               ${tags(p.technologies, "muted")}
               <div class="project__actions">
-                ${action({ ...p.links.github, variant: "secondary", ic: BRAND.github })}
-                ${action({ ...p.links.liveDemo, variant: "primary", ic: icon("externalLink") })}
-                ${action({ ...p.links.demoVideo, variant: "secondary", ic: icon("playCircle") })}
+                ${action({ ...p.links.github, variant: "secondary", ic: BRAND.github, srContext: " for Photosphere" })}
+                ${action({ ...p.links.liveDemo, variant: "primary", ic: icon("externalLink"), srContext: " of Photosphere" })}
+                ${action({ ...p.links.demoVideo, variant: "secondary", ic: icon("playCircle"), srContext: " of Photosphere" })}
               </div>
             </div>
           </div>
@@ -243,7 +244,7 @@ function aesaCard() {
                     </div>
                   </li>`).join("");
   return `
-        <article ${rc("project project--aesa")} aria-labelledby="aesa-title">
+        <article ${rc("project project--aesa")} id="project-aesa" aria-labelledby="aesa-title">
           ${tags(a.categories, "accent")}
           <div class="project__grid">
             <div>
@@ -261,9 +262,8 @@ function aesaCard() {
               </div>
               ${tags(a.technologies, "muted")}
               <div class="project__actions">
-                ${action({ ...a.links.github, variant: "primary", ic: BRAND.github })}
-                ${action({ ...a.links.documentation, variant: "secondary", ic: icon("bookOpen") })}
-                ${a.links.screenshots.href ? action({ ...a.links.screenshots, variant: "secondary", ic: icon("images") }) : ""}
+                ${action({ ...a.links.github, variant: "primary", ic: BRAND.github, srContext: " for AESA" })}
+                ${action({ ...a.links.documentation, variant: "secondary", ic: icon("bookOpen"), srContext: " for AESA" })}
               </div>
             </div>
 
@@ -277,37 +277,54 @@ function aesaCard() {
         </article>`;
 }
 
-function smallProjectCards() {
+function miniCard(p, i, { linked }) {
   return `
-        <div class="grid-auto">${smallProjects.map((p, i) => `
-          <article ${rc("card card--pad mini", i)}>
-            <div class="mini__top"><span class="tag tag--muted">${esc(p.category)}</span>${p.status === "In Progress" ? `<span class="tag tag--accent">In Progress</span>` : ""}</div>
-            <h3 class="mini__title">${esc(p.title)}</h3>
+          <article ${rc("card card--pad mini", i)}${linked ? ` id="project-${p.id}"` : ""}>
+            <div class="mini__top"><span class="tag tag--muted">${esc(p.category)}</span></div>
+            <h4 class="mini__title">${esc(p.title)}</h4>
             <p class="mini__desc">${esc(p.description)}</p>
-            ${tags(p.technologies)}
-            <div class="mini__link">${action({ href: p.github, label: "View on GitHub", variant: "link", ic: BRAND.github, extra: "" })}</div>
-          </article>`).join("")}
-        </div>`;
+            ${p.technologies?.length ? tags(p.technologies) : ""}
+            ${p.github ? `<div class="mini__link">${action({ href: p.github, label: "View on GitHub", variant: "link", ic: BRAND.github, srContext: ` for ${p.title}` })}</div>` : ""}
+          </article>`;
 }
 
 function projectsSection() {
+  const index = [
+    ["Photosphere", "#project-photosphere"], ["AESA", "#project-aesa"],
+    ...moreProjects.map((p) => [p.title, `#project-${p.id}`]),
+  ];
   return section("projects", "~/projects", "Projects",
-    "Two larger builds, an AI photo editor and an AI-assisted security agent, plus a few smaller cybersecurity exercises.",
-    `${photosphere()}${aesaCard()}${smallProjectCards()}`);
+    "Two featured builds, an AI photo editor and an AI-assisted security agent, plus more projects across machine learning and desktop development.",
+    `
+        <nav class="project-index" aria-label="Jump to a project">
+          <ul>${index.map(([l, h]) => `<li><a href="${h}">${esc(l)}</a></li>`).join("")}</ul>
+        </nav>${photosphere()}${aesaCard()}
+        <h3 class="group-label">More projects</h3>
+        <div class="grid-auto">${moreProjects.map((p, i) => miniCard(p, i, { linked: true })).join("")}
+        </div>
+        <h3 class="group-label">Cybersecurity practice projects</h3>
+        <div class="grid-auto">${practiceProjects.map((p, i) => miniCard(p, i, { linked: false })).join("")}
+        </div>`);
 }
 
 function experienceSection() {
-  return section("experience", "~/experience", "Experience", "", `
-          <ol class="timeline">${experience.map((r, i) => `
+  const entry = (r, i) => {
+    const org = r.platform
+      ? `${esc(r.organisation)} <span aria-hidden="true">&middot;</span> via <a class="inline-link" href="${esc(r.platform.href)}" target="_blank" rel="noopener noreferrer">${esc(r.platform.label)}<span class="sr-only"> profile (opens in a new tab)</span></a>`
+      : esc(r.organisation);
+    return `
             <li ${rc("card card--pad role", i)}>
-              <div class="role__top"><h3 class="role__title">${esc(r.role)}</h3><span class="role__period">${esc(r.period)}</span></div>
-              <p class="role__org">${esc(r.organisation)}</p>
+              <div class="role__top"><h3 class="role__title">${esc(r.role)}</h3>${r.period ? `<span class="role__period">${esc(r.period)}</span>` : ""}</div>
+              <p class="role__org">${org}</p>
               <p class="role__sum">${esc(r.summary)}</p>
-              ${tags(r.highlights)}
-            </li>`).join("")}
-            <li class="note-dashed reveal" data-d="1">${esc(experienceNote)}</li>
+              ${r.highlights?.length ? tags(r.highlights) : ""}
+              ${r.platform ? `<div class="role__actions">${action({ href: r.platform.href, label: `View ${r.platform.label} profile`, variant: "secondary", ic: icon("externalLink") })}</div>` : ""}
+            </li>`;
+  };
+  return section("experience", "~/experience", "Experience", "", `
+          <ol class="timeline">${experience.map(entry).join("")}
           </ol>
-          <p class="design-note reveal" data-d="2">${esc(graphicDesignNote)}</p>`);
+          <p class="design-note reveal" data-d="1">${esc(graphicDesignNote)}</p>`);
 }
 
 function educationSection() {
@@ -325,8 +342,7 @@ function educationSection() {
 }
 
 function certificationsSection() {
-  return section("certifications", "~/certifications", "Certifications", "", `
-          <div class="grid-auto" style="--min:19rem">${certifications.map((c, i) => `
+  const single = (c, i) => `
             <article ${rc("card card--pad cert", i % 3)}>
               <span class="icon-box">${icon("award")}</span>
               <div>
@@ -334,7 +350,23 @@ function certificationsSection() {
                 <p class="cert__issuer">${esc(c.issuer)}</p>
                 <span class="tag ${c.status === "Completed" ? "tag--accent" : "tag--warm"}">${esc(c.status)}</span>
               </div>
-            </article>`).join("")}
+            </article>`;
+  const group = (g, i) => `
+          <article ${rc("card card--pad cert-group", i)}>
+            <div class="cert-group__head">
+              <span class="icon-box">${icon(g.kind === "self" ? "bookOpen" : "award")}</span>
+              <div>
+                <h3 class="cert__name">${esc(g.title)}</h3>
+                <p class="cert__issuer">${esc(g.subtitle)}</p>
+              </div>
+              ${g.status ? `<span class="tag tag--accent cert-group__status">${esc(g.status)}</span>` : `<span class="tag tag--muted cert-group__status">Self-learning</span>`}
+            </div>
+            <ul class="feature-list cert-group__list">${g.items.map((t) => `<li>${esc(t)}</li>`).join("")}</ul>
+          </article>`;
+  return section("certifications", "~/certifications", "Certifications", "", `
+          <div class="grid-auto" style="--min:19rem">${certifications.map(single).join("")}
+          </div>
+          <div class="cert-groups">${certificationGroups.map(group).join("")}
           </div>`);
 }
 

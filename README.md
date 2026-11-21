@@ -1,6 +1,6 @@
 # Shanuka B. Herath — Portfolio (static)
 
-A lightweight, fully static rebuild of the Next.js portfolio. Plain **HTML + CSS + vanilla JavaScript**, no framework and no runtime server. Built for **Cloudflare Pages** and the domain **https://shanukabherath.pages.dev**.
+A lightweight, fully static rebuild of the Next.js portfolio. Plain **HTML + CSS + vanilla JavaScript**, no framework and no runtime server. Built for **Cloudflare Pages** and the domain **https://shanukab.herath.dev**.
 
 ```
 content/profile.mjs      <- all your text, links and lists (edit this)
@@ -18,16 +18,18 @@ tools/test-responsive.mjs<- browser checks (9 viewports, overflow, links, consol
 
 Everything lives in **`content/profile.mjs`** (the equivalent of `src/data/profile.ts` in the old project).
 
-**Links that are still empty.** In the old project these were `YOUR_...` placeholders. They show as dimmed, non-clickable buttons until you add a URL (an empty `""` means "not set yet"):
+**Project links.** All project links are real URLs now. A link whose `href` is left empty (`""`) is simply not rendered; the site never shows "coming soon" placeholders.
 
-| Where in `profile.mjs` | What to add |
+| Where in `profile.mjs` | What it holds |
 |---|---|
-| `featuredProject.links.github / liveDemo / demoVideo` | Photosphere repo, live demo, demo video |
-| `aesaProject.links.github / documentation` | AESA repo and docs |
-| `aesaProject.links.screenshots.href` | Optional; the button stays hidden while empty |
-| `smallProjects[].github` | One repo link per small cybersecurity project |
+| `featuredProject.links` | Photosphere: GitHub, Live Demo, Demo Video |
+| `aesaProject.links` | AESA: GitHub, Documentation |
+| `moreProjects[]` | No Exit Online, Q-Learning Agent, Healthcare Appointment System (each with a `github` URL) |
+| `practiceProjects[]` | The three earlier cybersecurity exercises (no public repos, so no links) |
+| `experience[]` | Freelance Software Developer (Fiverr profile link) and Graphic Designer |
+| `certifications[]`, `certificationGroups[]` | Single credentials, the Microsoft group and the self-learning list |
 
-Then run `npm run build` again.
+**Check the links** with `npm run build && npm run check:links` (see below).
 
 ## 2. Build and preview
 
@@ -47,6 +49,8 @@ npm run test:responsive          # checks 320 / 360 / 375 / 390 / 430 / 768 / 10
 ```
 
 It fails if any horizontal scroll appears, any text sits outside the viewport, any container clips content, a console error or failed request occurs, an image/anchor is broken, or reduced-motion / no-JS visitors can't see content. Screenshots go to `test-screenshots/`.
+
+Link check: `npm run check:links` requests every external link in `dist/` and prints its status. GitHub answers **404 for private repositories** when you are not signed in, so a 404 there means "private or renamed". Fiverr, Vimeo and LinkedIn often return 403/429 to scripts even when the page is fine; open those in a browser.
 
 Regenerating the social preview image after changing your name or role: `npm run og` (uses your original avatar from `tools/Avatar.original.png`).
 
@@ -120,6 +124,13 @@ Check afterwards: `https://shanukab.herath.dev/` loads, refreshing works, `/robo
 **Removed (static hosting):** Next.js, React, Framer Motion, Tailwind, `lucide-react` (icons are now inline SVG), and the unused `/api/contact` route.
 
 **Added:** self-hosted fonts, `404.html`, sitemap, robots, manifest, Open Graph/Twitter tags, JSON-LD, skip link, scroll-spy nav, keyboard-accessible menu (Esc closes), no-JS fallback, `_headers`.
+
+## 7. Content update (project links, experience, certifications)
+
+- **Name and headline:** the name always stays on one line (its font size is derived from its column width with CSS container units, capped at 4.25rem). The headline *Computer Science Graduate | Software & AI Developer* is shown on one line, with a spaced sky-blue `|`, whenever its column is at least 29rem (about 464px) wide, which is tablets and up. On phones, one line would need text smaller than 13px, so the two halves stack and the separator is hidden.
+- **Projects:** Photosphere and AESA stay featured with their real links (new tab, accessible labels). New cards: No Exit Online, Q-Learning Agent, Healthcare Appointment System, plus a jump index above the cards. The three earlier cybersecurity exercises are kept in their own group (they have no public repos, so they show no link button). Descriptions come from each repository's README; AESA's card was brought in line with its README.
+- **Experience:** the placeholder sentence is removed; *Freelance Software Developer* via Fiverr is added, with the Fiverr link.
+- **Certifications:** Burp Suite is now Completed; *Future in Quality Assurance* (SLIIT City UNI) added; CAISR renamed to *Certified Artificial Intelligence Security & Risk (CAISR)* with issuer *Red Team Leaders*; nine Microsoft credentials grouped under one issuer card; *Other self-learning* lists two items with no issuer or status claimed.
 
 ## Licences
 
