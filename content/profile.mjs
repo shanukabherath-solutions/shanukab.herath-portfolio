@@ -154,13 +154,41 @@ export const aesaProject = {
 export const moreProjects = [
   {
     id: "no-exit-online",
-    title: "No Exit Online",
-    category: "Project",
-    // The repository's README could not be read when this card was written (the repo returned 404 to
-    // anonymous visitors), so the description is deliberately generic. Replace it with the real
-    // description and technologies once the repository is public.
-    description: "A personal software project by Shanuka B. Herath. The source code and project details are in the GitHub repository.",
-    technologies: [],
+    variant: "spotlight", // wide card with an expandable details section
+    shortTitle: "No Exit Online",
+    title: "No Exit Online - Browser-Based Game & Security Engineering",
+    // Two equal pillars: the card must read as game development AND security engineering.
+    categories: [
+      { label: "Game Development", tone: "accent" },
+      { label: "Security Engineering", tone: "warm" },
+    ],
+    description:
+      "A browser-based puzzle game developed using Godot Engine and GDScript, supported by a security-focused CI/CD workflow. Combines game development, application security testing, automated security scanning, and secure build pipeline engineering.",
+    pillars: [
+      {
+        icon: "gamepad",
+        tone: "accent",
+        label: "Game development",
+        text: "A browser-based puzzle game developed using Godot Engine and GDScript, exported for HTML5 browser execution and deployed to Vercel.",
+      },
+      {
+        icon: "shield",
+        tone: "warm",
+        label: "Security engineering",
+        text: "Automated security tests that run against the actual game, a hardened build pipeline with hash-pinned dependencies, and scanning with CodeQL, Trivy, and Gitleaks.",
+      },
+    ],
+    detailsTitle: "Read the project details",
+    detailsSubtitle: "Full description, technologies and project focus.",
+    detailParagraphs: [
+      "No Exit Online is a browser-based puzzle game developed using Godot Engine and GDScript, with a supporting security and CI/CD engineering workflow.",
+      "The original game project is maintained separately from the surrounding engineering components. The project incorporates automated security tests that run against the actual game, a hardened build pipeline with hash-pinned dependencies, and GitHub Actions workflows for continuous integration and deployment.",
+      "Security analysis and scanning are integrated into the development workflow using CodeQL, Trivy, and Gitleaks. Security findings, test results, and verification limitations are documented to provide transparency into what was implemented, configured, successfully verified, and left untested.",
+      "The game is exported for HTML5 browser execution and deployed to Vercel.",
+    ],
+    technologies: ["Godot Engine", "GDScript", "HTML5", "Git", "GitHub", "GitHub Actions", "Vercel", "CodeQL", "Trivy", "Gitleaks"],
+    focus: ["Game Development", "Application Security", "DevSecOps", "CI/CD Automation", "Secure Build Pipelines", "Software Supply Chain Security"],
+    liveDemo: "https://no-exit-online.vercel.app/",
     github: "https://github.com/shanukabherath-solutions/No-Exit-Online",
   },
   {

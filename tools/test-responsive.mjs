@@ -92,6 +92,9 @@ for (const w of WIDTHS) {
   await page.screenshot({ path: `${SHOTS}/hero-${w}.png` });
 
   await scrollThrough(page);
+  // measure with every expandable section open: that is where narrow screens are most likely to break
+  await page.evaluate(() => document.querySelectorAll("details").forEach((d) => (d.open = true)));
+  await page.waitForTimeout(150);
   const r = await page.evaluate(pageChecks);
 
   if (r.docScrollW > r.vw) fail(`horizontal scroll: documentElement.scrollWidth ${r.docScrollW} > viewport ${r.vw}`);
@@ -176,6 +179,7 @@ console.log("\n== Functional checks (375px) ==");
     "Photosphere demo video": "https://vimeo.com/1248930571/c1f9e50684?share=copy&fl=sv&fe=ci",
     "AESA GitHub": "https://github.com/shanukabherath-solutions/AESA",
     "AESA documentation": "https://github.com/shanukabherath-solutions/AESA/tree/main/docs",
+    "No Exit Online live demo": "https://no-exit-online.vercel.app/",
     "No Exit Online GitHub": "https://github.com/shanukabherath-solutions/No-Exit-Online",
     "Q-Learning Agent GitHub": "https://github.com/shanukabherath-solutions/q-learning-agent",
     "Healthcare Appointment System GitHub": "https://github.com/shanukabherath-solutions/healthcare-appointment-system",
@@ -210,13 +214,44 @@ console.log("\n== Functional checks (375px) ==");
     msItems: document.querySelectorAll("#certifications .cert-group")[0]?.querySelectorAll("li").length,
     selfItems: [...(document.querySelectorAll("#certifications .cert-group")[1]?.querySelectorAll("li") || [])].map((e) => e.textContent.trim()),
   }));
-  for (const t of ["Photosphere", "AESA", "No Exit Online", "Q-Learning Agent", "Healthcare Appointment System"]) if (!content.projects.includes(t)) fail("project card missing: " + t);
+  for (const t of ["Photosphere", "AESA", "No Exit Online", "Q-Learning Agent", "Healthcare Appointment System"]) if (!content.projects.some((x) => x && x.startsWith(t))) fail("project card missing: " + t);
   if (content.index.length) fail("project index points to missing ids: " + content.index);
   if (content.ids.length) fail("duplicate ids: " + content.ids);
   if (!content.roles.includes("Freelance Software Developer")) fail("freelance experience entry missing");
   for (const t of ["Burp Suite (Web Security)", "Certified Artificial Intelligence Security & Risk (CAISR)", "Future in Quality Assurance", "Microsoft", "Other self-learning"]) if (!content.certs.includes(t)) fail("certification missing: " + t);
   if (content.msItems !== 9) fail("Microsoft group should list 9 items, got " + content.msItems);
   if (content.selfItems.length !== 2) fail("self-learning should list 2 items");
+  const ne = await page.evaluate(() => {
+    const c = document.querySelector("#project-no-exit-online");
+    if (!c) return null;
+    const txt = (e) => e?.textContent.replace(/\s+/g, " ").trim();
+    const links = [...c.querySelectorAll("a[href]")].map((a) => ({ name: txt(a), href: a.getAttribute("href"), target: a.target, visible: a.getBoundingClientRect().width > 0 }));
+    const det = c.querySelector("details");
+    return {
+      title: txt(c.querySelector(".spot__title")),
+      tagLabels: [...c.querySelectorAll(":scope > .tags .tag")].map(txt),
+      pillars: [...c.querySelectorAll(".pillar__label")].map(txt),
+      paragraphs: c.querySelectorAll(".detail__text p").length,
+      tech: [...c.querySelectorAll(".detail__blocks > div:first-child .tag")].map(txt),
+      focus: [...c.querySelectorAll(".detail__blocks > div:last-child .tag")].map(txt),
+      links, hasDetails: !!det, summaryVisible: det ? det.querySelector("summary").getBoundingClientRect().height > 0 : false,
+      inMoreGroup: !!document.querySelector("#projects .group-label + #project-no-exit-online"),
+    };
+  });
+  if (!ne) fail("No Exit Online card missing");
+  else {
+    if (ne.title !== "No Exit Online - Browser-Based Game & Security Engineering") fail("No Exit Online title wrong: " + ne.title);
+    if (!ne.inMoreGroup) fail("No Exit Online is not at the top of the More projects group");
+    if (ne.tagLabels.join("|") !== "Game Development|Security Engineering") fail("category tags: " + ne.tagLabels);
+    if (ne.pillars.length !== 2) fail("expected two pillars (game development, security engineering)");
+    if (ne.paragraphs !== 4) fail("expected 4 detailed-description paragraphs, got " + ne.paragraphs);
+    if (ne.tech.length !== 10) fail("expected 10 technologies, got " + ne.tech.length);
+    if (ne.focus.length !== 6) fail("expected 6 focus areas, got " + ne.focus.length);
+    if (!ne.hasDetails || !ne.summaryVisible) fail("expandable details missing or hidden");
+    for (const l of ne.links) { if (l.target !== "_blank" || !l.visible) fail("No Exit link not visible/new-tab: " + l.href); }
+    if (!ne.links.some((l) => l.name.startsWith("Live Demo")) || !ne.links.some((l) => l.name.startsWith("View on GitHub"))) fail("No Exit needs visible Live Demo and View on GitHub links");
+    console.log(`    No Exit Online: "${ne.title}"; pillars ${ne.pillars.join(" + ")}; ${ne.tech.length} tools, ${ne.focus.length} focus areas; links ${ne.links.map((l) => l.name.split(" (")[0]).join(", ")}`);
+  }
   console.log(`    projects: ${content.projects.join(" / ")}`);
   console.log(`    experience: ${content.roles.join(" / ")}; certifications: ${content.certs.length} cards (Microsoft group: ${content.msItems} items)`);
 

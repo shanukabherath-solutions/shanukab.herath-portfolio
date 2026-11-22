@@ -288,19 +288,59 @@ function miniCard(p, i, { linked }) {
           </article>`;
 }
 
+/** Wide card for a project that needs more room (two pillars, links, expandable details). */
+function spotlightCard(p) {
+  const ctx = ` for ${p.shortTitle}`;
+  return `
+        <article ${rc("card card--pad spot")} id="project-${p.id}" aria-labelledby="${p.id}-title">
+          <ul class="tags">${p.categories.map((c) => `<li class="tag tag--${c.tone}">${esc(c.label)}</li>`).join("")}</ul>
+          <div class="spot__grid">
+            <div class="spot__main">
+              <h4 class="spot__title" id="${p.id}-title">${esc(p.title)}</h4>
+              <p class="spot__desc">${esc(p.description)}</p>
+              <div class="spot__actions">
+                ${action({ href: p.liveDemo, label: "Live Demo", variant: "primary", ic: icon("externalLink"), srContext: " of " + p.shortTitle })}
+                ${action({ href: p.github, label: "View on GitHub", variant: "secondary", ic: BRAND.github, srContext: ctx })}
+              </div>
+            </div>
+            <ul class="pillars">${p.pillars.map((x) => `
+              <li class="pillar pillar--${x.tone}">
+                <div class="pillar__head"><span class="icon-box">${icon(x.icon)}</span><p class="pillar__label">${esc(x.label)}</p></div>
+                <p class="pillar__text">${esc(x.text)}</p>
+              </li>`).join("")}
+            </ul>
+          </div>
+          <details class="case spot__details">
+            <summary>
+              <span><span class="case__title">${esc(p.detailsTitle)}</span><span class="case__sub">${esc(p.detailsSubtitle)}</span></span>
+              ${icon("chevronDown")}
+            </summary>
+            <div class="case__body">
+              <div class="detail__text">${p.detailParagraphs.map((t) => `<p>${esc(t)}</p>`).join("")}</div>
+              <div class="detail__blocks">
+                <div><p class="detail__label">Technologies &amp; Tools</p>${tags(p.technologies)}</div>
+                <div><p class="detail__label">Project Focus</p>${tags(p.focus, "accent")}</div>
+              </div>
+            </div>
+          </details>
+        </article>`;
+}
+
 function projectsSection() {
+  const spotlight = moreProjects.filter((p) => p.variant === "spotlight");
+  const regular = moreProjects.filter((p) => p.variant !== "spotlight");
   const index = [
     ["Photosphere", "#project-photosphere"], ["AESA", "#project-aesa"],
-    ...moreProjects.map((p) => [p.title, `#project-${p.id}`]),
+    ...moreProjects.map((p) => [p.shortTitle || p.title, `#project-${p.id}`]),
   ];
   return section("projects", "~/projects", "Projects",
-    "Two featured builds, an AI photo editor and an AI-assisted security agent, plus more projects across machine learning and desktop development.",
+    "Two featured builds, an AI photo editor and an AI-assisted security agent, plus more projects across game development, security engineering, machine learning and desktop development.",
     `
         <nav class="project-index" aria-label="Jump to a project">
           <ul>${index.map(([l, h]) => `<li><a href="${h}">${esc(l)}</a></li>`).join("")}</ul>
         </nav>${photosphere()}${aesaCard()}
-        <h3 class="group-label">More projects</h3>
-        <div class="grid-auto">${moreProjects.map((p, i) => miniCard(p, i, { linked: true })).join("")}
+        <h3 class="group-label">More projects</h3>${spotlight.map(spotlightCard).join("")}
+        <div class="grid-auto spot-siblings">${regular.map((p, i) => miniCard(p, i, { linked: true })).join("")}
         </div>
         <h3 class="group-label">Cybersecurity practice projects</h3>
         <div class="grid-auto">${practiceProjects.map((p, i) => miniCard(p, i, { linked: false })).join("")}

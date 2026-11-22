@@ -24,7 +24,7 @@ Everything lives in **`content/profile.mjs`** (the equivalent of `src/data/profi
 |---|---|
 | `featuredProject.links` | Photosphere: GitHub, Live Demo, Demo Video |
 | `aesaProject.links` | AESA: GitHub, Documentation |
-| `moreProjects[]` | No Exit Online, Q-Learning Agent, Healthcare Appointment System (each with a `github` URL) |
+| `moreProjects[]` | No Exit Online (`variant: "spotlight"`: wide card with pillars, links and an expandable details section), Q-Learning Agent, Healthcare Appointment System |
 | `practiceProjects[]` | The three earlier cybersecurity exercises (no public repos, so no links) |
 | `experience[]` | Freelance Software Developer (Fiverr profile link) and Graphic Designer |
 | `certifications[]`, `certificationGroups[]` | Single credentials, the Microsoft group and the self-learning list |
@@ -129,6 +129,7 @@ Check afterwards: `https://shanukab.herath.dev/` loads, refreshing works, `/robo
 
 - **Name and headline:** the name always stays on one line (its font size is derived from its column width with CSS container units, capped at 4.25rem). The headline *Computer Science Graduate | Software & AI Developer* is shown on one line, with a spaced sky-blue `|`, whenever its column is at least 29rem (about 464px) wide, which is tablets and up. On phones, one line would need text smaller than 13px, so the two halves stack and the separator is hidden.
 - **Projects:** Photosphere and AESA stay featured with their real links (new tab, accessible labels). New cards: No Exit Online, Q-Learning Agent, Healthcare Appointment System, plus a jump index above the cards. The three earlier cybersecurity exercises are kept in their own group (they have no public repos, so they show no link button). Descriptions come from each repository's README; AESA's card was brought in line with its README.
+- **No Exit Online:** now a wide card at the top of *More projects* titled "No Exit Online - Browser-Based Game & Security Engineering". It carries the short description, two equal pillars (Game development in sky blue, Security engineering in peach), prominent Live Demo and View on GitHub buttons (new tab), and a "Read the project details" expander with the full description, technologies and project focus. All text is taken from the supplied project description; nothing was added.
 - **Experience:** the placeholder sentence is removed; *Freelance Software Developer* via Fiverr is added, with the Fiverr link.
 - **Certifications:** Burp Suite is now Completed; *Future in Quality Assurance* (SLIIT City UNI) added; CAISR renamed to *Certified Artificial Intelligence Security & Risk (CAISR)* with issuer *Red Team Leaders*; nine Microsoft credentials grouped under one issuer card; *Other self-learning* lists two items with no issuer or status claimed.
 
