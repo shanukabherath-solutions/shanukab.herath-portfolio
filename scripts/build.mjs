@@ -10,6 +10,8 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { transform } from "esbuild";
 
+const SCENE = JSON.parse(readFileSync(new URL("../src/assets/img/scene/manifest.json", import.meta.url), "utf8"));
+
 import { lucide } from "./icons.mjs";
 import {
   siteConfig as site, about, skillGroups, featuredProject as photo, aesaProject as aesa,
@@ -82,7 +84,7 @@ function header(base) {
     <div class="container header__inner">
       <a class="brand" href="${base}#home">
         <img class="brand__avatar" src="${base}assets/img/avatar-128.webp" width="40" height="40" alt="" decoding="async">
-        <span class="brand__name">${esc(site.shortName)}</span>
+        <span class="brand__name">${esc(site.name)}</span>
       </a>
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
         ${icon("menu", "icon--open")}${icon("x", "icon--close")}
@@ -95,6 +97,30 @@ function header(base) {
       </nav>
     </div>
   </header>`;
+}
+
+/**
+ * The interactive physics scene. Each object is its own <img> (trimmed PNG from the supplied set), placed with
+ * percentages of the scene window so the composition of Friends.png scales as one piece. The avatar is
+ * marked fixed: the script never moves it. Two copies are rendered (beside the avatar on phones/tablets, in
+ * the button row on desktop); CSS shows one, and the script only starts the visible copy.
+ */
+function scene() {
+  const { window: win, objects } = SCENE;
+  const pct = (v, total) => `${((v / total) * 100).toFixed(4)}%`;
+  const sprites = objects.map((o) => `
+              <img class="sprite${o.fixed ? " sprite--fixed" : ""}" src="assets/img/scene/${o.file}" alt="${esc(o.label)}"
+                   width="${o.w}" height="${o.h}" draggable="false" decoding="async" loading="lazy"
+                   data-name="${o.name}" data-x="${o.x}" data-y="${o.y}" data-w="${o.w}" data-h="${o.h}" data-z="${o.z}" data-gravity="${o.gravity}"${o.fixed ? ' data-fixed="true"' : ""}
+                   style="left:${pct(o.x, win.w)};top:${pct(o.y, win.h)};width:${pct(o.w, win.w)};z-index:${o.z + 1}">`).join("");
+  return `
+          <div class="scene" data-scene data-w="${win.w}" data-h="${win.h}" role="group"
+               aria-label="Interactive illustration. Drag and throw the characters with a mouse or finger; the portrait stays in place.">
+            <div class="scene__stage">${sprites}
+              <span class="scene__hint" aria-hidden="true">drag me</span>
+              <button class="scene__reset" type="button" hidden aria-label="Reset the illustration">${icon("undo")}</button>
+            </div>
+          </div>`;
 }
 
 function hero() {
@@ -131,12 +157,16 @@ function hero() {
           <div class="hero__actions">
             <a class="btn btn--primary" href="#projects">View My Projects ${icon("arrowUpRight")}</a>
             <a class="btn btn--secondary" href="#contact">Contact Me</a>
+            <div class="hero__scene-inline">${scene()}</div>
           </div>
           <ul class="hero__links" aria-label="Profiles and CV">
             <li><a href="${esc(site.social.github)}" target="_blank" rel="noopener noreferrer">${BRAND.github}GitHub</a></li>
             <li><a href="${esc(site.social.linkedin)}" target="_blank" rel="noopener noreferrer">${BRAND.linkedin}LinkedIn</a></li>
             <li><a href="${site.cvPath}" target="_blank" rel="noopener noreferrer">${icon("fileText")}CV / Resume</a></li>
           </ul>
+        </div>
+
+        <div class="hero__cover">${scene()}
         </div>
 
         <div class="hero__panel">

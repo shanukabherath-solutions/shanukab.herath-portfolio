@@ -133,6 +133,22 @@ Check afterwards: `https://shanukab.herath.dev/` loads, refreshing works, `/robo
 - **Experience:** the placeholder sentence is removed; *Freelance Software Developer* via Fiverr is added, with the Fiverr link.
 - **Certifications:** Burp Suite is now Completed; *Future in Quality Assurance* (SLIIT City UNI) added; CAISR renamed to *Certified Artificial Intelligence Security & Risk (CAISR)* with issuer *Red Team Leaders*; nine Microsoft credentials grouped under one issuer card; *Other self-learning* lists two items with no issuer or status claimed.
 
-## Licences
+## 8. Interactive physics scene (drag and throw)
+
+The illustration next to your avatar is assembled from the seven separate PNGs you supplied (`tools/scene-source/`), each as its own `<img>`, in exactly their positions from `Friends.png`.
+
+- **Placement:** on desktop (64em and up) it sits in the button row directly after *Contact Me*, on the same baseline, and takes whatever width is left, so it shrinks by itself when space is tight. On phones and tablets it sits on the avatar's row, immediately to its right.
+- **Assets:** `tools/make-scene-assets.py` trims only the fully transparent padding of each layer (no visible pixel changes), writes `src/assets/img/scene/*.png` plus `manifest.json` (positions and stacking order), and checks that re-compositing them reproduces `Friends.png` (max difference 1/255). Re-run it with `python3 tools/make-scene-assets.py` if you change the source layers. Original, untrimmed files stay in `tools/scene-source/`.
+- **Responsive:** objects are placed in percentages of a fixed scene window, so the composition scales as one piece; the physics runs in the original canvas coordinates, so it behaves the same at any size.
+- **Interaction** (`src/js/main.js`, vanilla JS, no dependencies): Pointer Events with pointer capture for mouse, pen and touch; several objects can be held at once (two fingers). Grabbing follows the visible shape (per-pixel alpha), so you pick up the object you actually touched. Release speed is measured over the last ~100 ms; if you pause before letting go, the object is just dropped. Motion uses `requestAnimationFrame` with gravity, air drag, floor friction and bouncing off the scene edges; objects always stay inside the scene, and the loop stops when everything is at rest.
+- **Avatar:** fixed. It has no transform, never captures touch scrolling (`touch-action: pan-y`) and pressing on it does nothing. Other objects pass behind or in front of it by stacking order and never move it.
+- **Touch:** movable objects use `touch-action: none` so dragging them never scrolls the page; everywhere else (including the avatar) the page scrolls normally.
+- **Reset:** a small reset button appears once something has been moved (keyboard accessible).
+- **Reduced motion:** objects still follow the pointer, but do not glide, fall or bounce after release, and the reset snaps instead of easing.
+- **Tuning:** the physics constants are at the top of the scene section in `src/js/main.js` (`GRAVITY`, `AIR`, `FLOOR_FRICTION`, `WALL_BOUNCE`, `FLOOR_BOUNCE`, `MAX_SPEED`).
+
+This replaces the earlier 3D-tilt cover image.
+
+## Licences## Licences
 
 Fonts: Space Grotesk and IBM Plex (SIL OFL, licence files in `src/assets/fonts/`). Icons: Lucide (ISC), GitHub/LinkedIn marks from Simple Icons.

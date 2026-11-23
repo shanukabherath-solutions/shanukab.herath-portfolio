@@ -1,0 +1,98 @@
+{
+  "canvas": [
+    1584,
+    396
+  ],
+  "window": {
+    "x": 733,
+    "y": 0,
+    "w": 714,
+    "h": 396
+  },
+  "objects": [
+    {
+      "name": "godot",
+      "file": "godot.png",
+      "x": 110,
+      "y": 251,
+      "w": 79,
+      "h": 74,
+      "z": 0,
+      "fixed": false,
+      "gravity": 1.0,
+      "label": "Godot logo"
+    },
+    {
+      "name": "whale",
+      "file": "whale.png",
+      "x": 40,
+      "y": 91,
+      "w": 452,
+      "h": 305,
+      "z": 1,
+      "fixed": false,
+      "gravity": 1.0,
+      "label": "Illustrated whale carrying blue containers"
+    },
+    {
+      "name": "dog",
+      "file": "dog.png",
+      "x": 116,
+      "y": 170,
+      "w": 164,
+      "h": 226,
+      "z": 2,
+      "fixed": false,
+      "gravity": 1.0,
+      "label": "Illustrated dog"
+    },
+    {
+      "name": "cat",
+      "file": "cat.png",
+      "x": 472,
+      "y": 169,
+      "w": 202,
+      "h": 227,
+      "z": 3,
+      "fixed": false,
+      "gravity": 1.0,
+      "label": "Illustrated black cat"
+    },
+    {
+      "name": "github",
+      "file": "github.png",
+      "x": 541,
+      "y": 303,
+      "w": 40,
+      "h": 40,
+      "z": 4,
+      "fixed": false,
+      "gravity": 1.0,
+      "label": "GitHub logo"
+    },
+    {
+      "name": "avatar",
+      "file": "avatar.png",
+      "x": 216,
+      "y": 25,
+      "w": 323,
+      "h": 371,
+      "z": 5,
+      "fixed": true,
+      "gravity": 0.0,
+      "label": "Illustrated portrait of Shanuka B. Herath with arms crossed"
+    },
+    {
+      "name": "bee",
+      "file": "bee.png",
+      "x": 457,
+      "y": 95,
+      "w": 156,
+      "h": 76,
+      "z": 6,
+      "fixed": false,
+      "gravity": 0.12,
+      "label": "Illustrated bee"
+    }
+  ]
+}

@@ -228,18 +228,25 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 /* The fix: explicit single column with minmax(0,1fr) so wide children can never
    stretch the track beyond the viewport, plus min-width:0 on every grid item. */
 .hero__grid{
-  display:grid;gap:clamp(1.5rem,5vw,2.5rem);
-  grid-template-columns:minmax(0,1fr);
-  grid-template-areas:"avatar" "text" "panel";
+  --hg:clamp(1.5rem,5vw,2.5rem);          /* grid gap */
+  --av:clamp(6.5rem,32vw,9rem);           /* avatar width */
+  display:grid;gap:var(--hg);
+  grid-template-columns:auto minmax(0,1fr);
+  grid-template-areas:"avatar cover" "text text" "panel panel";
 }
 .hero__grid > *{min-width:0}
-.hero__avatar{grid-area:avatar;width:clamp(6.5rem,32vw,9rem);justify-self:start}
+.hero__avatar{grid-area:avatar;width:var(--av);justify-self:start;position:relative;z-index:2}
 .hero__avatar img{
   width:100%;aspect-ratio:1;border-radius:50%;object-fit:cover;
   box-shadow:0 0 0 2px var(--sky),0 0 0 8px rgba(99,183,219,.10),0 24px 60px -24px rgba(99,183,219,.55);
 }
 .hero__text{grid-area:text;min-width:0;container-type:inline-size}
 .hero__panel{grid-area:panel;width:100%;max-width:28rem}
+
+/* Interactive scene, phones and tablets: on the avatar's row, immediately to its right. */
+.hero__cover{grid-area:cover;align-self:center;justify-self:start;width:100%;max-width:23rem;min-width:0}
+/* Desktop copy lives in the button row (shown from 64em) */
+.hero__scene-inline{display:none}
 
 .prompt{font-family:var(--font-mono);font-size:.875rem;color:var(--sky)}
 .prompt span{color:var(--peach)}
@@ -294,7 +301,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .hero__links .icon{width:1.0625rem;height:1.0625rem}
 
 @media (min-width:40em){
-  .hero__avatar{width:clamp(8rem,20vw,10rem)}
+  .hero__grid{--av:clamp(8rem,20vw,10rem)}
   .hero__actions .btn{flex:0 0 auto}
 }
 @media (min-width:64em){
@@ -307,9 +314,47 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
   }
   .hero__text{align-self:center}
   .hero__avatar{width:clamp(13rem,21vw,17rem);justify-self:center;align-self:end}
+  /* Desktop: the scene sits in the button row, directly after "Contact Me". It takes the width that is
+     left (flex-basis 0), so it shrinks on its own when space is tight. Buttons align to its bottom edge,
+     where the characters stand. */
+  .hero__cover{display:none}
+  .hero__actions{align-items:flex-end}
+  .hero__scene-inline{display:block;flex:1 1 0;min-width:8rem;max-width:23rem}
   .hero__panel{justify-self:center;align-self:start}
   .hero .code{font-size:.75rem}
 }
+
+/* ---- Interactive physics scene ------------------------------------------
+   The stage keeps the aspect ratio of the scene window cut from Friends.png. Every object is positioned
+   with percentages, so the composition scales as one piece. script (main.js) only adds a translate to
+   movable objects; the avatar is never touched. */
+.scene{position:relative;width:100%;touch-action:pan-y;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.scene__stage{position:relative;width:100%;aspect-ratio:714 / 396}
+.sprite{
+  position:absolute;display:block;height:auto;max-width:none;
+  cursor:inherit;touch-action:none;                   /* touch-action:none = finger drags the object, not the page */
+  -webkit-user-drag:none;-webkit-tap-highlight-color:transparent;
+  transform:translate3d(0,0,0);
+}
+.sprite--fixed{touch-action:pan-y}      /* the avatar: never moves, never blocks page scrolling */
+.scene__stage.is-over{cursor:grab}
+.scene__stage.is-grabbing,.scene__stage.is-grabbing .sprite{cursor:grabbing}
+.sprite.is-dragging{filter:drop-shadow(0 10px 10px rgba(0,0,0,.45))}
+.scene__hint{
+  position:absolute;left:1.5%;top:1.5%;pointer-events:none;
+  font-family:var(--font-mono);font-size:.625rem;line-height:1;color:var(--ink-faint);
+  transition:opacity .4s;
+}
+.scene.has-interacted .scene__hint{opacity:0}
+.scene__reset{
+  position:absolute;right:1.5%;top:1.5%;z-index:50;
+  display:inline-flex;align-items:center;justify-content:center;width:2rem;height:2rem;border-radius:50%;
+  border:1px solid var(--line-sky);background:rgba(17,20,29,.85);color:var(--sky);
+  transition:background-color .2s,color .2s;
+}
+.scene__reset[hidden]{display:none}
+.scene__reset:hover{background:rgba(99,183,219,.18);color:var(--sky-bright)}
+.scene__reset .icon{width:1rem;height:1rem}
 
 /* ---- Window (code-card) component, used by hero, mockup and AESA ------ */
 .window{
@@ -631,7 +676,8 @@ a.contact__item:hover{border-color:var(--line-sky);background:rgba(99,183,219,.0
 @media (prefers-reduced-motion:no-preference){
   @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
   @keyframes blink{50%{opacity:0}}
-  .hero__avatar,.hero__text > *,.hero__panel{animation:rise .7s var(--ease) both}
+  .hero__avatar,.hero__cover,.hero__text > *,.hero__panel{animation:rise .7s var(--ease) both}
+  .hero__cover{animation-delay:.2s}
   .hero__avatar{animation-delay:.05s}
   .hero__text > :nth-child(1){animation-delay:.08s}
   .hero__text > :nth-child(2){animation-delay:.16s}
