@@ -15,7 +15,7 @@ const SCENE = JSON.parse(readFileSync(new URL("../src/assets/img/scene/manifest.
 import { lucide } from "./icons.mjs";
 import {
   siteConfig as site, about, skillGroups, featuredProject as photo, aesaProject as aesa,
-  moreProjects, practiceProjects, experience, graphicDesignNote, education, certifications, certificationGroups,
+  moreProjects, practiceProjects, softwareReleases, experience, graphicDesignNote, education, certifications, certificationGroups,
   services, servicesNote,
 } from "../content/profile.mjs";
 
@@ -75,7 +75,7 @@ const section = (id, path, title, desc, body) => `
 /* ------------------------------------------------------------------ sections */
 const NAV = [
   ["Home", "#home"], ["About", "#about"], ["Skills", "#skills"], ["Projects", "#projects"],
-  ["Experience", "#experience"], ["Education", "#education"], ["Contact", "#contact"],
+  ["Releases", "#software-releases"], ["Experience", "#experience"], ["Education", "#education"], ["Contact", "#contact"],
 ];
 
 function header(base) {
@@ -377,6 +377,54 @@ function projectsSection() {
         </div>`);
 }
 
+/**
+ * One installable software release (content/profile.mjs -> softwareReleases.items). The logo is the supplied artwork,
+ * only resized, on a light tile: its wordmark is dark and would disappear on the navy page.
+ */
+function releaseCard(r, i) {
+  const ver = esc(r.version);
+  const ext = `target="_blank" rel="noopener noreferrer"`;
+  const facts = r.facts.map((f) => `
+                <div><dt>${esc(f.label)}</dt><dd>${f.iso ? `<time datetime="${esc(f.iso)}">${esc(f.value)}</time>` : esc(f.value)}</dd></div>`).join("");
+  const checksum = r.checksum
+    ? `
+                <div><dt>Integrity</dt><dd><a class="inline-link" href="${esc(r.checksum.href)}" ${ext}>${esc(r.checksum.label)}<span class="sr-only"> for ${esc(r.name)} ${ver} (opens in a new tab)</span></a></dd></div>`
+    : "";
+  return `
+          <li>
+            <article ${rc("release", i)} id="release-${r.id}" aria-labelledby="${r.id}-title">
+              <div class="release__aside">
+                <div class="release__logo">
+                  <img src="${r.logo.src}" srcset="${r.logo.srcset}" sizes="(min-width: 64em) 272px, (min-width: 36em) 176px, 192px"
+                       width="${r.logo.size}" height="${r.logo.size}" loading="lazy" decoding="async" alt="${esc(r.logo.alt)}">
+                </div>
+                <dl class="release__facts">${facts}${checksum}
+                </dl>
+              </div>
+              <div class="release__main">
+                <p class="tag release__category">${esc(r.category)}</p>
+                <div class="release__heading">
+                  <h3 class="release__title" id="${r.id}-title">${esc(r.name)}</h3>
+                  <p class="tag tag--accent release__version"><span class="release__dot" aria-hidden="true"></span>Version ${ver}</p>
+                </div>
+                <div class="release__desc">${r.description.map((t) => `<p>${esc(t)}</p>`).join("")}</div>
+                <h4 class="release__label">Key features</h4>
+                <ul class="feature-list release__features">${r.features.map((f) => `<li>${esc(f)}</li>`).join("")}</ul>
+                <div class="project__actions release__actions">
+                  ${action({ ...r.links.download, variant: "primary", ic: icon("download"), srContext: `, ${r.name} ${r.version} installer` })}
+                  ${action({ ...r.links.github, variant: "secondary", ic: BRAND.github, srContext: ` for ${r.name}` })}
+                </div>
+              </div>
+            </article>
+          </li>`;
+}
+
+function releasesSection() {
+  return section("software-releases", "~/software-releases", softwareReleases.title, softwareReleases.tagline, `
+          <ul class="release-list">${softwareReleases.items.map(releaseCard).join("")}
+          </ul>`);
+}
+
 function experienceSection() {
   const entry = (r, i) => {
     const org = r.platform
@@ -497,6 +545,12 @@ function head({ base, css, title, description, canonical, robots = "index,follow
         address: { "@type": "PostalAddress", addressCountry: "LK" },
         alumniOf: { "@type": "CollegeOrUniversity", name: "University of Bedfordshire" },
         sameAs: [site.social.github, site.social.linkedin] },
+      ...softwareReleases.items.map((r) => ({
+        "@type": "SoftwareApplication", "@id": `${site.siteUrl}/#${r.id}`, name: r.name, description: r.description[0],
+        applicationCategory: "UtilitiesApplication", operatingSystem: "Windows 10, Windows 11",
+        softwareVersion: r.version, downloadUrl: r.links.download.href, image: `${site.siteUrl}/${r.logo.src}`,
+        author: { "@id": `${site.siteUrl}/#person` }, url: `${site.siteUrl}/#software-releases`,
+      })),
       { "@type": "WebSite", "@id": `${site.siteUrl}/#website`, url: `${site.siteUrl}/`, name: `${site.shortName} — Portfolio`, inLanguage: "en", publisher: { "@id": `${site.siteUrl}/#person` } },
     ],
   };
@@ -545,7 +599,7 @@ function indexHtml(css, js) {
 ${head({ base: "", css, title: site.seoTitle, description: site.metaDescription, canonical: `${site.siteUrl}/` })}
 <body>
   <a class="skip-link" href="#main-content">Skip to content</a>${header("")}
-  <main id="main-content">${hero()}${aboutSection()}${skillsSection()}${projectsSection()}${experienceSection()}${educationSection()}${certificationsSection()}${servicesSection()}${contactSection()}
+  <main id="main-content">${hero()}${aboutSection()}${skillsSection()}${projectsSection()}${releasesSection()}${experienceSection()}${educationSection()}${certificationsSection()}${servicesSection()}${contactSection()}
   </main>${footer("")}
   <script src="assets/js/${js}" defer></script>
 </body>

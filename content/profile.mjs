@@ -211,6 +211,60 @@ export const moreProjects = [
   },
 ];
 
+/**
+ * Software Releases: packaged, installable software. Each entry renders as one release card in #software-releases,
+ * so a future release only needs a new object here (rebuild, nothing else to wire up).
+ *
+ * Stofree links were checked against the public GitHub release page: the installer and checksum file are real
+ * assets of tag v1.0.0. The download points at that exact tag, so the button always matches the version shown.
+ * When you publish a new version, update `version`, `released`, `size` and the three release URLs together.
+ * (`releases/latest/download/<file>` also works because the asset name has no version in it, but then the
+ * card could show an older version number than the file people actually receive.)
+ */
+const STOFREE_REPO = "https://github.com/shanukabherath-solutions/Stofree";
+const STOFREE_TAG = `${STOFREE_REPO}/releases/download/v1.0.0`;
+
+export const softwareReleases = {
+  title: "Software Releases",
+  tagline: "Software I've built, packaged, and released.",
+  items: [
+    {
+      id: "stofree",
+      name: "Stofree",
+      category: "Windows Disk Space Analyzer",
+      version: "1.0.0",
+      description: [
+        "Stofree is a Windows disk space analyzer designed to help users understand how their storage is being used. It provides visual drive and folder analysis, identifies the largest files, and presents file-type breakdowns to make storage usage easier to understand.",
+        "Stofree is strictly read-only. It never deletes, moves, or modifies files. Users can also export storage analysis reports in CSV and JSON formats.",
+      ],
+      features: [
+        "Visual drive and folder analysis",
+        "Identify and explore the largest files",
+        "File-type breakdown and storage insights",
+        "Export analysis reports in CSV and JSON formats",
+        "Strictly read-only storage scanning",
+      ],
+      // Supplied logo, only resized (see src/assets/img/stofree-logo-*.webp; original in tools/Stofree.original.png)
+      logo: {
+        src: "assets/img/stofree-logo-512.webp",
+        srcset: "assets/img/stofree-logo-256.webp 256w, assets/img/stofree-logo-512.webp 512w, assets/img/stofree-logo-1024.webp 1024w",
+        alt: "Stofree logo: a yellow warning triangle with a crumpled sheet of paper and a pixel mouse pointer",
+        size: 1024,
+      },
+      facts: [
+        { label: "Platform", value: "Windows 10 and 11, 64-bit" },
+        { label: "Installer", value: "Setup .exe, 35.1 MB" },
+        { label: "Released", value: "26 Nov 2026", iso: "2026-11-26" },
+      ],
+      checksum: { label: "SHA-256 checksums", href: `${STOFREE_TAG}/SHA256SUMS.txt` },
+      links: {
+        download: { label: "Download for Windows", href: `${STOFREE_TAG}/Stofree-Windows-10-11-x64-Setup.exe` },
+        github: { label: "View on GitHub", href: STOFREE_REPO },
+      },
+    },
+  ],
+};
+
 /** Earlier practice projects carried over from the original portfolio. No public links, so none are shown. */
 export const practiceProjects = [
   { title: "Password Strength Analyzer", category: "Cybersecurity", description: "A Python-based application that evaluates password strength and gives feedback on how it could be improved.", technologies: ["Python"] },

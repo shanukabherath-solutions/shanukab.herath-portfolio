@@ -174,6 +174,14 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
   .nav__item--cv .nav__link:hover{border-color:var(--line-sky);color:var(--sky);background:rgba(99,183,219,.08)}
   html.menu-open{overflow:auto}
 }
+/* Eight links plus the CV button need a little less padding on narrow desktops (64em to 75em) */
+@media (min-width:64em){.nav__link{white-space:nowrap}}
+@media (min-width:64em) and (max-width:74.99em){
+  .nav__list{gap:0}
+  .nav__link{padding-inline:.5rem;font-size:.9rem}
+  .nav__item--cv{margin-left:.25rem}
+  .nav__item--cv .nav__link{padding-inline:.8rem}
+}
 
 /* ---- Buttons / tags ---------------------------------------------------- */
 .btn{
@@ -599,6 +607,64 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .mini .tags{margin-top:1rem}
 .mini__link{margin-top:.75rem}
 
+/* Software releases: a product card. Aside = logo tile + spec rows; main = name, version, copy, features, actions.
+   Phones: stacked. 36em+: logo beside the spec rows. 64em+: aside is a fixed column next to the copy. */
+.release-list{display:grid;gap:1.5rem}
+.release{
+  display:grid;gap:clamp(1.5rem,4vw,2.5rem);grid-template-columns:minmax(0,1fr);
+  padding:clamp(1.25rem,4vw,2.5rem);
+  border:1px solid rgba(99,183,219,.22);border-radius:var(--radius-lg);background:var(--card);
+  transition:border-color .25s;
+}
+.release > *{min-width:0}
+.release:hover{border-color:rgba(99,183,219,.45)}
+
+/* Phones: logo, then the product itself, then the spec rows (the aside dissolves into the card's grid) */
+.release__aside{display:contents}
+.release__logo{order:1}
+.release__main{order:2}
+.release__facts{order:3}
+.release__logo{
+  width:min(100%,10.5rem);aspect-ratio:1;
+  border-radius:var(--radius);background:#fff;       /* the logo's wordmark is dark: it needs a light tile */
+  box-shadow:0 0 0 1px rgba(245,246,248,.16),0 28px 56px -28px rgba(99,183,219,.6);
+  transition:transform .35s var(--ease);
+}
+.release:hover .release__logo{transform:translateY(-3px)}
+.release__logo img{width:100%;height:100%;border-radius:inherit;object-fit:contain}
+.release__facts{margin:0}
+.release__facts > div{padding:.65rem 0;border-top:1px solid var(--line-soft)}
+.release__facts dt{font-family:var(--font-mono);font-size:.75rem;line-height:1.4;color:var(--ink-faint)}
+.release__facts dd{margin:.125rem 0 0;color:var(--ink-dim);font-size:.875rem;line-height:1.45}
+
+.release__heading{margin-top:1rem;display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1rem}
+.release__title{
+  font-family:var(--font-display);font-weight:700;letter-spacing:-.025em;line-height:1.1;
+  font-size:clamp(2.25rem,1.6rem + 3vw,3.5rem);
+}
+.release__version{gap:.5rem;font-size:.8125rem}
+.release__dot{width:.5rem;height:.5rem;border-radius:50%;background:var(--sky);box-shadow:0 0 0 3px rgba(99,183,219,.2)}
+.release__desc{margin-top:1.25rem;display:grid;gap:.9rem;max-width:38rem;line-height:1.7;text-wrap:pretty}
+.release__desc p:first-child{color:var(--ink);font-size:1.0625rem}
+.release__desc p + p{color:var(--ink-dim);font-size:.9375rem}
+.release__label{margin-top:1.75rem;font-family:var(--font-mono);font-weight:500;font-size:.75rem;color:var(--sky)}
+.release__features{margin-top:.75rem}
+.release__actions{margin-top:2rem}
+.release__actions .btn{flex:1 1 auto;min-height:3rem}
+.release__actions .btn--primary{padding-inline:1.5rem}
+
+@media (min-width:36em){
+  .release__aside{display:grid;grid-template-columns:11rem minmax(0,1fr);gap:1.5rem;align-items:center}
+  .release__aside > *{min-width:0}
+  .release__logo,.release__main,.release__facts{order:0}
+  .release__logo{width:100%}
+  .release__actions .btn{flex:0 0 auto}
+}
+@media (min-width:64em){
+  .release{grid-template-columns:17rem minmax(0,1fr);column-gap:3.25rem;align-items:start}
+  .release__aside{grid-template-columns:minmax(0,1fr);gap:1.25rem;align-items:start}
+}
+
 /* Experience / Education / Certifications / Services */
 .timeline{display:grid;gap:1.25rem}
 .role__top{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.25rem .75rem}
@@ -689,6 +755,7 @@ a.contact__item:hover{border-color:var(--line-sky);background:rgba(99,183,219,.0
   .caret{animation:blink 1s steps(1) infinite}
   .js .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s var(--ease),transform .6s var(--ease);transition-delay:var(--d,0s)}
   .js .reveal.is-in{opacity:1;transform:none}
+  .js .release.reveal{transition:opacity .6s var(--ease),transform .6s var(--ease),border-color .25s}
   .reveal[data-d="1"]{--d:.06s}.reveal[data-d="2"]{--d:.12s}.reveal[data-d="3"]{--d:.18s}.reveal[data-d="4"]{--d:.24s}
 }
 @media (prefers-reduced-motion:reduce){

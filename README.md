@@ -22,6 +22,7 @@ Everything lives in **`content/profile.mjs`** (the equivalent of `src/data/profi
 
 | Where in `profile.mjs` | What it holds |
 |---|---|
+| `softwareReleases.items[]` | Software Releases section (Stofree): version, description, features, logo, download and GitHub links |
 | `featuredProject.links` | Photosphere: GitHub, Live Demo, Demo Video |
 | `aesaProject.links` | AESA: GitHub, Documentation |
 | `moreProjects[]` | No Exit Online (`variant: "spotlight"`: wide card with pillars, links and an expandable details section), Q-Learning Agent, Healthcare Appointment System |
@@ -149,6 +150,17 @@ The illustration next to your avatar is assembled from the seven separate PNGs y
 
 This replaces the earlier 3D-tilt cover image.
 
-## Licences## Licences
+## 9. Software Releases section
+
+`#software-releases` sits directly after Projects and has its own nav link ("Releases"). It renders one product card per entry in `softwareReleases.items` (`content/profile.mjs`), so adding another release is one more object in that array: no build-script or CSS change.
+
+- **Stofree** is the first entry. Its logo is the supplied artwork, only resized (`src/assets/img/stofree-logo-256/512/1024.webp`; the untouched original is `tools/Stofree.original.png`). It is shown on a white tile because the wordmark is dark and would vanish on the navy page.
+- **Download for Windows** points at the real installer asset of the GitHub release `v1.0.0` (`Stofree-Windows-10-11-x64-Setup.exe`, 35.1 MB). The link is pinned to that tag so it always matches the version shown on the card. **View on GitHub** links to the repository. Both open in a new tab with `rel="noopener noreferrer"`.
+- **Shipping a new version:** change `version`, `released`, the `size` text and the release URLs in the entry together, then `npm run build`. Release assets used here: the installer and `SHA256SUMS.txt` (shown as the "SHA-256 checksums" link).
+- The release is also described to search engines as a `SoftwareApplication` in the page's JSON-LD (generated from the same entry).
+- **Layout:** phones show logo, name and version, description, features, buttons, then the spec rows; tablets put the logo beside the spec rows; desktop uses a fixed aside column. Styles are the `.release*` rules in `src/css/styles.css`.
+- The nav gets slightly tighter spacing between 64em and 75em so eight links plus the CV button still fit on one line.
+
+## Licences
 
 Fonts: Space Grotesk and IBM Plex (SIL OFL, licence files in `src/assets/fonts/`). Icons: Lucide (ISC), GitHub/LinkedIn marks from Simple Icons.
