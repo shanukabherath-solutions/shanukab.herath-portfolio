@@ -536,7 +536,7 @@ const THEME_SCRIPT = `document.documentElement.className=document.documentElemen
 const THEME_HASH = "sha256-" + createHash("sha256").update(THEME_SCRIPT).digest("base64");
 
 function head({ base, css, title, description, canonical, robots = "index,follow", withSocial = true }) {
-  const og = `${site.siteUrl}/assets/img/og-image.png`;
+  const og = `${site.siteUrl}/og-image.png`; // served from the site root (src/og-image.png, 1200x627)
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -566,20 +566,21 @@ function head({ base, css, title, description, canonical, robots = "index,follow
   ${canonical ? `<link rel="canonical" href="${canonical}">` : ""}
   ${withSocial ? `<meta name="keywords" content="${esc(site.keywords.join(", "))}">
   <meta property="og:type" content="website">
-  <meta property="og:site_name" content="${esc(site.shortName)}">
-  <meta property="og:title" content="${esc(title)}">
-  <meta property="og:description" content="${esc(description)}">
+  <meta property="og:site_name" content="${esc(site.ogSiteName)}">
+  <meta property="og:title" content="${esc(site.ogTitle)}">
+  <meta property="og:description" content="${esc(site.ogDescription)}">
   <meta property="og:url" content="${canonical}">
   <meta property="og:locale" content="en_US">
   <meta property="og:image" content="${og}">
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Shanuka B. Herath: Software &amp; AI Developer. Illustrated avatar on a deep navy background.">
+  <meta property="og:image:height" content="627">
+  <meta property="og:image:alt" content="${esc(site.ogImageAlt)}">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="${esc(title)}">
-  <meta name="twitter:description" content="${esc(description)}">
-  <meta name="twitter:image" content="${og}">` : ""}
+  <meta name="twitter:title" content="${esc(site.ogTitle)}">
+  <meta name="twitter:description" content="${esc(site.ogDescription)}">
+  <meta name="twitter:image" content="${og}">
+  <meta name="twitter:image:alt" content="${esc(site.ogImageAlt)}">` : ""}
   <link rel="icon" href="${base}favicon.ico" sizes="48x48">
   <link rel="icon" type="image/png" sizes="32x32" href="${base}assets/img/icon-32.png">
   <link rel="icon" type="image/png" sizes="192x192" href="${base}assets/img/icon-192.png">
@@ -647,6 +648,7 @@ async function main() {
   cpSync(join(SRC, "assets", "img"), join(DIST, "assets", "img"), { recursive: true });
   cpSync(join(SRC, "assets", "cv"), join(DIST, "cv"), { recursive: true });
   cpSync(join(SRC, "favicon.ico"), join(DIST, "favicon.ico"));
+  cpSync(join(SRC, "og-image.png"), join(DIST, "og-image.png")); // social preview, public at /og-image.png
 
   // Pages
   writeFileSync(join(DIST, "index.html"), indexHtml(cssName, jsName));
@@ -702,12 +704,15 @@ async function main() {
 
 /cv/*
   Cache-Control: public, max-age=86400
+
+/og-image.png
+  Cache-Control: public, max-age=86400
 `);
 
   const count = (d) => readdirSync(d, { recursive: true }).length;
   console.log(`Built dist/ — ${count(DIST)} entries`);
   console.log(`  CSS ${(css.length / 1024).toFixed(1)} KB, JS ${(js.length / 1024).toFixed(1)} KB, index.html ${(readFileSync(join(DIST, "index.html")).length / 1024).toFixed(1)} KB`);
-  if (!existsSync(join(SRC, "assets", "img", "og-image.png"))) console.warn("  ! src/assets/img/og-image.png is missing (run: npm run og)");
+  if (!existsSync(join(SRC, "og-image.png"))) console.warn("  ! src/og-image.png is missing (run: npm run og)");
 }
 
 main().catch((e) => { console.error(e); process.exit(1); });

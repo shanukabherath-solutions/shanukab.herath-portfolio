@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://shanukab.herath.dev/sitemap.xml
+Sitemap: https://shanukabherath.pages.dev/sitemap.xml

@@ -1,6 +1,6 @@
 # Shanuka B. Herath — Portfolio (static)
 
-A lightweight, fully static rebuild of the Next.js portfolio. Plain **HTML + CSS + vanilla JavaScript**, no framework and no runtime server. Built for **Cloudflare Pages** and the domain **https://shanukab.herath.dev**.
+A lightweight, fully static rebuild of the Next.js portfolio. Plain **HTML + CSS + vanilla JavaScript**, no framework and no runtime server. Built for **Cloudflare Pages**. The public URL is set once, as `siteUrl` in `content/profile.mjs` (currently **https://shanukabherath.pages.dev**); canonical, Open Graph, sitemap and robots all derive from it.
 
 ```
 content/profile.mjs      <- all your text, links and lists (edit this)
@@ -53,7 +53,7 @@ It fails if any horizontal scroll appears, any text sits outside the viewport, a
 
 Link check: `npm run check:links` requests every external link in `dist/` and prints its status. GitHub answers **404 for private repositories** when you are not signed in, so a 404 there means "private or renamed". Fiverr, Vimeo and LinkedIn often return 403/429 to scripts even when the page is fine; open those in a browser.
 
-Regenerating the social preview image after changing your name or role: `npm run og` (uses your original avatar from `tools/Avatar.original.png`).
+Regenerating the social preview image after changing your name or role: `npm run og` (uses your original avatar from `tools/Avatar.original.png`). It writes `src/og-image.png` (1200 x 627), which the build publishes at `/og-image.png`. The Open Graph / Twitter title, description and site name are `ogTitle`, `ogDescription` and `ogSiteName` in `content/profile.mjs`. After changing the image, ask Facebook's Sharing Debugger and LinkedIn's Post Inspector to re-scrape the URL, because platforms cache previews.
 
 ## 3. Deploy to Cloudflare Pages
 

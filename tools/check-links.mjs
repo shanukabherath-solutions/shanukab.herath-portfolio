@@ -14,7 +14,7 @@ import { fileURLToPath } from "node:url";
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const html = readFileSync(join(ROOT, "dist", "index.html"), "utf8");
 const urls = [...new Set([...html.matchAll(/href="(https?:\/\/[^"]+)"/g)].map((m) => m[1].replace(/&amp;/g, "&")))]
-  .filter((u) => !u.startsWith("https://shanukab.herath.dev"));
+  .filter((u) => !u.startsWith("https://shanukabherath.pages.dev"));
 
 const BOT_BLOCKERS = /(^|\.)(fiverr|vimeo|linkedin)\.com$/;
 let problems = 0;

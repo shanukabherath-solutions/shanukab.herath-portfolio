@@ -18,7 +18,13 @@ export const siteConfig = {
   seoTitle: "Shanuka B. Herath | Computer Science Graduate & Software Developer",
   location: "Sri Lanka",
   email: "shanbhera@gmail.com",
-  siteUrl: "https://shanukab.herath.dev",
+  siteUrl: "https://shanukabherath.pages.dev",
+  // Social sharing (Open Graph / Twitter). The page <title> and meta description above stay separate on purpose.
+  ogTitle: "Shanuka B. Herath | Software Developer Portfolio",
+  ogDescription:
+    "Explore my portfolio, software projects and technical work across software development, AI, cybersecurity and DevSecOps.",
+  ogSiteName: "Shanuka B. Herath Portfolio",
+  ogImageAlt: "Shanuka B. Herath, Software Developer. Software Development, AI and Cybersecurity. Illustrated avatar on a deep navy background.",
   cvPath: "cv/shanuka-herath-cv.pdf",
   social: {
     github: "https://github.com/shanukabherath-solutions",

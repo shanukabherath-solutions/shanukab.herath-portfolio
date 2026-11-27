@@ -336,7 +336,7 @@ console.log("\n== Functional checks (375px) ==");
   console.log(`    experience: ${content.roles.join(" / ")}; certifications: ${content.certs.length} cards (Microsoft group: ${content.msItems} items)`);
 
   // CV + metadata files reachable
-  for (const p of ["/cv/shanuka-herath-cv.pdf", "/favicon.ico", "/robots.txt", "/sitemap.xml", "/manifest.webmanifest", "/assets/img/og-image.png", "/_headers"]) {
+  for (const p of ["/cv/shanuka-herath-cv.pdf", "/favicon.ico", "/robots.txt", "/sitemap.xml", "/manifest.webmanifest", "/og-image.png", "/_headers"]) {
     const r = await page.request.get(BASE + p);
     if (!r.ok()) fail(`${p} -> ${r.status()}`);
   }
